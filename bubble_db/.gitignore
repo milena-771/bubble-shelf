@@ -1,0 +1,16 @@
+.metadata
+target/
+bin/
+logs/
+secrets/
+
+### Eclipse ###
+.classpath
+.project
+.settings
+application.properties
+log4j2.xml
+
+### Others ###
+.DS_Store
+.factoryPath
