@@ -3,7 +3,7 @@ DELETE FROM t_comics;
 DELETE FROM t_questions;
 DELETE FROM t_reading_profiles;
 
-INSERT INTO t_reading_profiles (id, profile_name, description) VALUES
+INSERT INTO t_reading_profiles (rp_id, rp_profile_name, rp_description) VALUES
 (
   1,
   'THE_DREAMER',
@@ -36,7 +36,7 @@ INSERT INTO t_reading_profiles (id, profile_name, description) VALUES
 );
 
 
-INSERT INTO t_questions (id, question_order, label) VALUES
+INSERT INTO t_questions (q_id, q_order, q_label) VALUES
 (1, 1, 'What kind of story do you enjoy the most?'),
 (2, 2, 'What do you look for first in a comic book?'),
 (3, 3, 'Which atmosphere appeals to you the most?'),
@@ -51,7 +51,7 @@ INSERT INTO t_questions (id, question_order, label) VALUES
 (12, 12, 'How do you relate to classic comic characters?'),
 (13, 13, 'What storytelling style do you value the most?');
 
-INSERT INTO t_answers (answer_order, label, question_id, reading_profile_id) VALUES
+INSERT INTO t_answers (a_order, a_label, a_question_id, a_reading_profile_id) VALUES
 
 -- Q1
 (1, 'Emotional and poetic stories', 1, 1),
@@ -133,17 +133,17 @@ INSERT INTO t_answers (answer_order, label, question_id, reading_profile_id) VAL
 
 
 INSERT INTO t_comics (
-  id,
-  isbn,
-  title,
-  author,
-  country,
-  publication_date,
-  genre,
-  front_cover,
-  editor,
-  reading_profile_id,
-  summary
+  c_id,
+  c_isbn,
+  c_title,
+  c_author,
+  c_country,
+  c_publication_date,
+  c_genre,
+  c_front_cover,
+  c_editor,
+  c_reading_profile_id,
+  c_summary
 ) VALUES
 
 -- =========================

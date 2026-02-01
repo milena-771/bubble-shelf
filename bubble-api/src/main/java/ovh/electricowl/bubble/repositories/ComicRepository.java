@@ -22,7 +22,7 @@ import ovh.electricowl.bubble.repositories.exceptions.DAONotFoundException;
 @Repository
 public class ComicRepository {
 
-	private static final Logger LOG = LogManager.getLogger();
+	private static final Logger LOG = LogManager.getLogger(ComicRepository.class);
 
 	@Autowired
 	@Qualifier("bubbleJdbcTemplate")
@@ -52,16 +52,16 @@ public class ComicRepository {
 		@Override
 		public Comic mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
 			Comic data = new Comic();
-			data.setId(rs.getLong("id"));
-			data.setIsbn(rs.getString("isbn"));
-			data.setTitle(rs.getString("title"));
-			data.setAuthor(rs.getString("author"));
-			data.setCountry(rs.getString("country"));
-			data.setPublicationYear(rs.getInt("publication_date"));
-			data.setFrontCover(rs.getString("front_cover"));
-			data.setGenre(rs.getString("genre"));
-			data.setEditor(rs.getString("editor"));
-			data.setSummary(rs.getString("summary"));
+			data.setId(rs.getLong("c_id"));
+			data.setIsbn(rs.getString("c_isbn"));
+			data.setTitle(rs.getString("c_title"));
+			data.setAuthor(rs.getString("c_author"));
+			data.setCountry(rs.getString("c_country"));
+			data.setPublicationYear(rs.getInt("c_publication_date"));
+			data.setFrontCover(rs.getString("c_front_cover"));
+			data.setGenre(rs.getString("c_genre"));
+			data.setEditor(rs.getString("c_editor"));
+			data.setSummary(rs.getString("c_summary"));
 			return data;
 		}
 

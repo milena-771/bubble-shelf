@@ -4,48 +4,48 @@ DROP TABLE IF EXISTS t_questions;
 DROP TABLE IF EXISTS t_reading_profiles;
 
 CREATE TABLE t_reading_profiles (
-	id SERIAL,
-	description VARCHAR(1000) NOT NULL,
-	profile_name VARCHAR(200) NOT NULL UNIQUE,
-	CONSTRAINT pk_movie_id PRIMARY KEY(id)	
+	rp_id SERIAL,
+	rp_description VARCHAR(1000) NOT NULL,
+	rp_profile_name VARCHAR(200) NOT NULL UNIQUE,
+	CONSTRAINT pk_movie_id PRIMARY KEY(rp_id)	
 );
 
 CREATE TABLE t_questions (
-	id SERIAL,
-	question_order INTEGER NOT NULL UNIQUE,
-	label VARCHAR(500) NOT NULL,
-	CONSTRAINT pk_question_id PRIMARY KEY(id)
+	q_id SERIAL,
+	q_order INTEGER NOT NULL UNIQUE,
+	q_label VARCHAR(500) NOT NULL,
+	CONSTRAINT pk_question_id PRIMARY KEY(q_id)
 );
 
 CREATE TABLE t_comics (
-	id SERIAL,
-	isbn VARCHAR(200) NOT NULL UNIQUE,
-	title VARCHAR(200) NOT NULL,
-	author VARCHAR(200) NOT NULL,
-	country VARCHAR(200) NOT NULL,
-	publication_date INTEGER NOT NULL,
-	genre VARCHAR(100) NOT NULL,
-	front_cover VARCHAR(300) NOT NULL,
-	editor VARCHAR(200) NOT NULL,
-	reading_profile_id INTEGER,
-	summary VARCHAR(500) NOT NULL,
-	CONSTRAINT pk_comic_id PRIMARY KEY(id),
+	c_id SERIAL,
+	c_isbn VARCHAR(200) NOT NULL UNIQUE,
+	c_title VARCHAR(200) NOT NULL,
+	c_author VARCHAR(200) NOT NULL,
+	c_country VARCHAR(200) NOT NULL,
+	c_publication_date INTEGER NOT NULL,
+	c_genre VARCHAR(100) NOT NULL,
+	c_front_cover VARCHAR(300) NOT NULL,
+	c_editor VARCHAR(200) NOT NULL,
+	c_reading_profile_id INTEGER,
+	c_summary VARCHAR(500) NOT NULL,
+	CONSTRAINT pk_comic_id PRIMARY KEY(c_id),
 	CONSTRAINT fk_reading_profile_id
-		FOREIGN KEY(reading_profile_id)
-		REFERENCES t_reading_profiles(id)
+		FOREIGN KEY(c_reading_profile_id)
+		REFERENCES t_reading_profiles(rp_id)
 );
 
 CREATE TABLE t_answers (
-	id SERIAL,
-	answer_order INTEGER NOT NULL UNIQUE,
-	label VARCHAR(500) NOT NULL,
-	question_id INTEGER,
-	reading_profile_id INTEGER,
-	CONSTRAINT pk_answer_id PRIMARY KEY(id),
+	a_id SERIAL,
+	a_order INTEGER NOT NULL UNIQUE,
+	a_label VARCHAR(500) NOT NULL,
+	a_question_id INTEGER,
+	a_reading_profile_id INTEGER,
+	CONSTRAINT pk_answer_id PRIMARY KEY(a_id),
 	CONSTRAINT fk_reading_profile_id
-		FOREIGN KEY(reading_profile_id)
-		REFERENCES t_reading_profiles(id),
+		FOREIGN KEY(a_reading_profile_id)
+		REFERENCES t_reading_profiles(rp_id),
 	CONSTRAINT fk_question_id
-		FOREIGN KEY(question_id)
-		REFERENCES t_questions(id)
+		FOREIGN KEY(a_question_id)
+		REFERENCES t_questions(q_id)
 );
