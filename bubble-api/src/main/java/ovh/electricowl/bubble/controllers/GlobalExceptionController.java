@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import ovh.electricowl.bubble.repositories.exceptions.DuplicateResourceException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
+import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionController {
@@ -38,7 +39,7 @@ public class GlobalExceptionController {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(ResourceNotFoundException.class)
+	@ExceptionHandler({ ResourceNotFoundException.class, SessionNotFoundException.class })
 	public ResponseEntity<String> handleNotFoundException(ResourceNotFoundException e) {
 		LOG.warn("ERR 404 Not Found : {} --> {}", e.getClass().getSimpleName(), e);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

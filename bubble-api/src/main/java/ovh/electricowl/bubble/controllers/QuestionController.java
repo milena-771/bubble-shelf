@@ -1,10 +1,13 @@
 package ovh.electricowl.bubble.controllers;
 
+import java.util.UUID;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,11 +31,12 @@ public class QuestionController {
 
 	@GetMapping("{num}")
 	@ResponseStatus(HttpStatus.OK)
-	public QuestionResponse getQuestionByNumber(@PathVariable("num") int order)
+	public QuestionResponse getQuestionByNumber(@PathVariable("num") int order,
+			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId)
 			throws ResourceNotFoundException, ServiceException {
 		try {
 			LOG.info("START >>> getQuestionByNumber");
-			return questionService.getQuestion(order);
+			return questionService.getQuestion(order, sessionId);
 		} finally {
 			LOG.info("END <<< getQuestionByNumber");
 		}

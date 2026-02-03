@@ -1,10 +1,22 @@
 package ovh.electricowl.bubble.dto;
 
+import java.util.UUID;
+
 public class QuestionResponse {
+
+	private UUID sessionId;
 
 	private QuestionDTO question;
 
 	private ProgressDTO progress;
+
+	public UUID getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(UUID sessionId) {
+		this.sessionId = sessionId;
+	}
 
 	public QuestionDTO getQuestion() {
 		return question;
@@ -24,6 +36,7 @@ public class QuestionResponse {
 
 	@Override
 	public String toString() {
-		return "QuestionResponse [question=" + question + ", progress=" + progress + "]";
+		return "QuestionResponse [sessionId=" + sessionId + ", question=" + question + ", progress="
+				+ progress + "]";
 	}
 }
