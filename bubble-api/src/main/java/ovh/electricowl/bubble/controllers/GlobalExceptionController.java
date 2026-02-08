@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import ovh.electricowl.bubble.repositories.exceptions.DuplicateResourceException;
+import ovh.electricowl.bubble.services.exceptions.InvalidAnswerException;
+import ovh.electricowl.bubble.services.exceptions.InvalidQuestionException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
+import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
+import ovh.electricowl.bubble.services.exceptions.TestAlreadyCompletedException;
 
 @RestControllerAdvice
 public class GlobalExceptionController {
@@ -28,11 +32,21 @@ public class GlobalExceptionController {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleValidationExceptions(
 			MethodArgumentNotValidException e) {
-		LOG.warn("ERR 400 Bad Request : {} --> {}", e.getClass().getSimpleName(), e);
+		LOG.warn("ERR 400 Validation error");
 		Map<String, String> errors = new HashMap<>();
 		e.getBindingResult().getFieldErrors()
 				.forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+		return ResponseEntity.badRequest().body(errors);
+	}
+
+	/**
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler({ InvalidQuestionException.class, InvalidAnswerException.class })
+	public ResponseEntity<String> handleInvalidExceptions(Exception e) {
+		LOG.warn("ERR 400 Bad Request : {} --> {}", e.getClass().getSimpleName(), e);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 
 	/**
@@ -40,7 +54,7 @@ public class GlobalExceptionController {
 	 * @return
 	 */
 	@ExceptionHandler({ ResourceNotFoundException.class, SessionNotFoundException.class })
-	public ResponseEntity<String> handleNotFoundException(ResourceNotFoundException e) {
+	public ResponseEntity<String> handleNotFoundException(Exception e) {
 		LOG.warn("ERR 404 Not Found : {} --> {}", e.getClass().getSimpleName(), e);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
@@ -60,10 +74,20 @@ public class GlobalExceptionController {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler({ DuplicateResourceException.class })
+	@ExceptionHandler({ DuplicateResourceException.class, TestAlreadyCompletedException.class })
 	public ResponseEntity<String> handleConflictException(Exception e) {
 		LOG.warn("ERR 409 Conflict : {} --> {}", e.getClass().getSimpleName(), e);
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+	}
+
+	/**
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(SessionExpiredException.class)
+	public ResponseEntity<String> handleResourceGone(SessionExpiredException e) {
+		LOG.warn("ERR 410 Gone : {} --> {}", e.getClass().getSimpleName(), e);
+		return ResponseEntity.status(HttpStatus.GONE).body(e.getMessage());
 	}
 
 	/**
@@ -74,7 +98,7 @@ public class GlobalExceptionController {
 	public ResponseEntity<String> handleGenericException(Exception e) {
 		LOG.error("ERR 500 Generic : {} --> ", e.getClass().getSimpleName(), e);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.body("Une erreur innattendue est survenue. Veuillez réessayer ultérieurement.");
+				.body("Une erreur technique est survenue. Veuillez réessayer ultérieurement.");
 	}
 
 }

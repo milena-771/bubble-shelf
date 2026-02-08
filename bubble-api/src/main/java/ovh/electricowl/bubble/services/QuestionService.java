@@ -11,4 +11,7 @@ public interface QuestionService {
 	public QuestionResponse getQuestion(int order, UUID sessionId)
 			throws ResourceNotFoundException, ServiceException;
 
+	public boolean checkValidAnswer(Integer questionOrder, Long answerId)
+			throws ResourceNotFoundException, ServiceException;
+
 }

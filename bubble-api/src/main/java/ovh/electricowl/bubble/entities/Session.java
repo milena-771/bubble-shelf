@@ -8,11 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ovh.electricowl.bubble.services.exceptions.AnswerAlreadySubmittedException;
 import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.TestAlreadyCompletedException;
 
 public class Session {
+
+	private static final Logger LOG = LogManager.getLogger(Session.class);
 
 	private UUID id;
 
@@ -28,9 +33,9 @@ public class Session {
 
 	private Clock clock;
 
-	public Session(int firstQuestionId, Duration maxTimePerQuestion, Clock clock) {
+	public Session(int questionOrder, Duration maxTimePerQuestion, Clock clock) {
 		this.id = UUID.randomUUID();
-		this.currentQuestionNumber = firstQuestionId;
+		this.currentQuestionNumber = questionOrder;
 		this.maxTimePerQuestion = maxTimePerQuestion;
 		this.clock = clock;
 		this.completed = false;
@@ -69,6 +74,7 @@ public class Session {
 		Duration elapsed = Duration.between(lastQuestionDisplayedAt, Instant.now(clock));
 
 		if (elapsed.compareTo(maxTimePerQuestion) > 0) {
+			LOG.warn("Session expired.");
 			throw new SessionExpiredException("Session expired, restart the test.");
 		}
 	}
@@ -76,9 +82,11 @@ public class Session {
 	public void addAnswer(Integer questionId, Long answerId)
 			throws TestAlreadyCompletedException, AnswerAlreadySubmittedException {
 		if (completed) {
+			LOG.warn("Test already completed.");
 			throw new TestAlreadyCompletedException("Test already completed.");
 		}
 		if (answers.containsKey(questionId)) {
+			LOG.warn("Answer already submitted.");
 			throw new AnswerAlreadySubmittedException("Answer already submitted.");
 		}
 		answers.put(questionId, answerId);

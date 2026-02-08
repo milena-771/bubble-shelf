@@ -42,10 +42,30 @@ public class QuestionRepository {
 			throw new DAOException(e);
 		} catch (Exception e) {
 			LOG.error("Error findQuestionByOrder: {}", e);
-			throw e;
+			throw new DAOException(e);
 		} finally {
 			LOG.info("END <<< findQuestionById");
 		}
+	}
+
+	public Integer findQuestionByAnswer(Long answerId) throws DAONotFoundException, DAOException {
+		try {
+			LOG.info("START >>> findQuestionByAnswer");
+			String sql = "SELECT q_order FROM t_questions q JOIN t_answers a ON a.a_question_id=q.q_id WHERE a_id = ?";
+			return jdbcTemplate.queryForObject(sql, Integer.class, answerId);
+		} catch (EmptyResultDataAccessException e) {
+			LOG.error("Error resources not found findAllComics: {}", e);
+			throw new DAONotFoundException(e);
+		} catch (DataAccessException e) {
+			LOG.error("Error data access findQuestionByOrder: {}", e);
+			throw new DAOException(e);
+		} catch (Exception e) {
+			LOG.error("Error findQuestionByOrder: {}", e);
+			throw new DAOException(e);
+		} finally {
+			LOG.info("END <<< findQuestionByAnswer");
+		}
+
 	}
 
 	public class QuestionWithAnswersExtractor implements ResultSetExtractor<Question> {

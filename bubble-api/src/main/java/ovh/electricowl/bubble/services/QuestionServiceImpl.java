@@ -62,11 +62,11 @@ public class QuestionServiceImpl implements QuestionService {
 				sessionRepository.save(session);
 			} else {
 				if (sessionId == null) {
-					throw new ServiceException("sessionId is required for next questions");
+					LOG.warn("sessionId is required for next questions.");
+					throw new ServiceException("sessionId is required for next questions.");
 				}
 				session = sessionRepository.findById(sessionId)
 						.orElseThrow(SessionNotFoundException::new);
-
 				session.validateAnswerTime();
 			}
 			QuestionResponse response = QuestionMapper.toDTO(entity, totalQuestions);
@@ -78,13 +78,34 @@ public class QuestionServiceImpl implements QuestionService {
 			LOG.warn("No data found : {}", e.getMessage());
 			throw new ResourceNotFoundException(e);
 		} catch (DAOException e) {
-			LOG.warn("Err --> {}", e);
+			LOG.warn("Err getQuestion() --> {}", e);
 			throw new ServiceException(e);
 		} catch (Exception e) {
-			LOG.warn("Err --> {}", e);
+			LOG.warn("Err getQuestion() --> {}", e);
 			throw new ServiceException(e);
 		} finally {
 			LOG.info("END <<< getQuestion");
+		}
+	}
+
+	@Override
+	public boolean checkValidAnswer(Integer currentQuestion, Long answerId)
+			throws ServiceException, ResourceNotFoundException {
+		try {
+			LOG.info("START >>> checkValidAnswer");
+			Integer question = questionRepository.findQuestionByAnswer(answerId);
+			if ((question != null) && (question == currentQuestion)) {
+				return true;
+			}
+			return false;
+		} catch (DAONotFoundException e) {
+			LOG.warn("No data found : {}", e.getMessage());
+			throw new ResourceNotFoundException(e);
+		} catch (DAOException e) {
+			LOG.warn("Err checkValidAnswer --> {}", e);
+			throw new ServiceException(e);
+		} finally {
+			LOG.info("END <<< checkValidAnswer");
 		}
 	}
 
