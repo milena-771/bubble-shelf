@@ -69,7 +69,9 @@ public class QuestionServiceImpl implements QuestionService {
 						.orElseThrow(SessionNotFoundException::new);
 				session.validateAnswerTime();
 			}
-			QuestionResponse response = QuestionMapper.toDTO(entity, totalQuestions);
+			QuestionResponse response = QuestionMapper.toQuestionResponse(entity, totalQuestions);
+			Long idAnswer = session.getAnswers().getOrDefault(order, 0L);
+			response.getSelectedAnswer();
 			session.startQuestionTimer();
 			sessionRepository.save(session);
 			response.setSessionId(session.getId());

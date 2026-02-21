@@ -6,6 +6,8 @@ public class QuestionResponse {
 
 	private UUID sessionId;
 
+	private Long selectedAnswer;
+
 	private QuestionDTO question;
 
 	private ProgressDTO progress;
@@ -16,6 +18,14 @@ public class QuestionResponse {
 
 	public void setSessionId(UUID sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public Long getSelectedAnswer() {
+		return selectedAnswer;
+	}
+
+	public void setSelectedAnswer(Long selectedAnswer) {
+		this.selectedAnswer = selectedAnswer;
 	}
 
 	public QuestionDTO getQuestion() {
@@ -36,7 +46,7 @@ public class QuestionResponse {
 
 	@Override
 	public String toString() {
-		return "QuestionResponse [sessionId=" + sessionId + ", question=" + question + ", progress="
-				+ progress + "]";
+		return "QuestionResponse [sessionId=" + sessionId + ", selectedAnswer=" + selectedAnswer
+				+ ", question=" + question + ", progress=" + progress + "]";
 	}
 }

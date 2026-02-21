@@ -6,6 +6,8 @@ public class ProgressDTO {
 
 	private Integer totalQuestionNumber;
 
+	private boolean completed;
+
 	public Integer getCurrentQuestionNumber() {
 		return currentQuestionNumber;
 	}
@@ -22,10 +24,17 @@ public class ProgressDTO {
 		this.totalQuestionNumber = totalQuestionNumber;
 	}
 
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
 	@Override
 	public String toString() {
 		return "ProgressDTO [currentQuestionNumber=" + currentQuestionNumber
-				+ ", totalQuestionNumber=" + totalQuestionNumber + "]";
+				+ ", totalQuestionNumber=" + totalQuestionNumber + ", completed=" + completed + "]";
 	}
-
 }

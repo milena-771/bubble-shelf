@@ -19,6 +19,7 @@ import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.TestAlreadyCompletedException;
+import ovh.electricowl.bubble.services.exceptions.TestNotCompletedException;
 
 @RestControllerAdvice
 public class GlobalExceptionController {
@@ -74,7 +75,8 @@ public class GlobalExceptionController {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler({ DuplicateResourceException.class, TestAlreadyCompletedException.class })
+	@ExceptionHandler({ DuplicateResourceException.class, TestAlreadyCompletedException.class,
+			TestNotCompletedException.class })
 	public ResponseEntity<String> handleConflictException(Exception e) {
 		LOG.warn("ERR 409 Conflict : {} --> {}", e.getClass().getSimpleName(), e);
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

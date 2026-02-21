@@ -1,6 +1,6 @@
 package ovh.electricowl.bubble.dto;
 
-public class ComicResponse {
+public class ComicDTO {
 
 	private Long id;
 

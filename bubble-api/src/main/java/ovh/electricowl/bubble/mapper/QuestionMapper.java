@@ -12,7 +12,7 @@ import ovh.electricowl.bubble.entities.Question;
 
 public class QuestionMapper {
 
-	public static QuestionResponse toDTO(Question entity, Integer totalQuestions) {
+	public static QuestionResponse toQuestionResponse(Question entity, Integer totalQuestions) {
 		if (entity == null) {
 			return null;
 		}
@@ -33,6 +33,7 @@ public class QuestionMapper {
 		ProgressDTO progress = new ProgressDTO();
 		progress.setCurrentQuestionNumber(entity.getOrder());
 		progress.setTotalQuestionNumber(totalQuestions);
+		progress.setCompleted(false);
 		dto.setQuestion(question);
 		dto.setProgress(progress);
 		return dto;

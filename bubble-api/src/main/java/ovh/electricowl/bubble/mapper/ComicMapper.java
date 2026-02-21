@@ -1,15 +1,15 @@
 package ovh.electricowl.bubble.mapper;
 
-import ovh.electricowl.bubble.dto.ComicResponse;
+import ovh.electricowl.bubble.dto.ComicDTO;
 import ovh.electricowl.bubble.entities.Comic;
 
 public class ComicMapper {
 
-	public static ComicResponse toDTO(Comic entity) {
+	public static ComicDTO toComicDTO(Comic entity) {
 		if (entity == null) {
 			return null;
 		}
-		ComicResponse dto = new ComicResponse();
+		ComicDTO dto = new ComicDTO();
 		dto.setId(entity.getId());
 		dto.setIsbn(entity.getIsbn());
 		dto.setTitle(entity.getTitle());

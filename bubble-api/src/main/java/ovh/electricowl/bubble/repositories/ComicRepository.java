@@ -2,7 +2,9 @@ package ovh.electricowl.bubble.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,14 +12,12 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import ovh.electricowl.bubble.entities.Comic;
 import ovh.electricowl.bubble.repositories.exceptions.DAOException;
-import ovh.electricowl.bubble.repositories.exceptions.DAONotFoundException;
 
 @Repository
 public class ComicRepository {
@@ -28,22 +28,20 @@ public class ComicRepository {
 	@Qualifier("bubbleJdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
 
-	public List<Comic> findAllComics() throws DAOException, DAONotFoundException {
+	public List<Comic> findComicsByProfileIds(Set<Long> ids) throws DAOException {
 		try {
-			LOG.info("START >>> findAllComics");
-			String sql = "SELECT * FROM t_comics";
-			return jdbcTemplate.query(sql, new ComicRowMapper());
-		} catch (EmptyResultDataAccessException e) {
-			LOG.error("Error resources not found findAllComics: {}", e);
-			throw new DAONotFoundException(e);
+			LOG.info("START >>> findComicsByProfileIds");
+			String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
+			String sql = String.format("SELECT * FROM t_comics WHERE c_reading_profile_id IN (%s)",
+					inSql);
+			return jdbcTemplate.query(sql, new ComicRowMapper(), ids.toArray());
 		} catch (DataAccessException e) {
-			LOG.error("Error data access findAllComics: {}", e);
+			LOG.warn("Error access findComicsByProfileIds: ", e);
 			throw new DAOException(e);
 		} catch (Exception e) {
-			LOG.error("Error findAllComics: {}", e);
-			throw e;
+			throw new DAOException(e);
 		} finally {
-			LOG.info("END <<< findAllComics");
+			LOG.info("END <<< findComicsByProfileIds");
 		}
 	}
 

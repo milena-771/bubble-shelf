@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import ovh.electricowl.bubble.dto.ProgressDTO;
 import ovh.electricowl.bubble.dto.QuestionResponse;
 import ovh.electricowl.bubble.dto.SubmitAnswerRequest;
 import ovh.electricowl.bubble.entities.Session;
@@ -74,8 +75,17 @@ public class AnswerServiceImpl implements AnswerService {
 			session.addAnswer(questionOrder, answerId);
 
 			questionOrder++;
-			if (questionOrder >= totalQuestions) {
-				// --> Handle the end of the test
+			if (questionOrder > totalQuestions) {
+				session.markCompleted();
+
+				response = new QuestionResponse();
+				response.setSessionId(session.getId());
+				response.setQuestion(null);
+				ProgressDTO progress = new ProgressDTO();
+				progress.setCurrentQuestionNumber(questionOrder);
+				progress.setTotalQuestionNumber(totalQuestions);
+				progress.setCompleted(true);
+				response.setProgress(progress);
 			} else {
 				session.moveToNextQuestion(questionOrder);
 				response = questionService.getQuestion(questionOrder, sessionId);
