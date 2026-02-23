@@ -16,7 +16,6 @@ import jakarta.validation.Valid;
 import ovh.electricowl.bubble.dto.QuestionResponse;
 import ovh.electricowl.bubble.dto.SubmitAnswerRequest;
 import ovh.electricowl.bubble.services.AnswerService;
-import ovh.electricowl.bubble.services.exceptions.AnswerAlreadySubmittedException;
 import ovh.electricowl.bubble.services.exceptions.InvalidAnswerException;
 import ovh.electricowl.bubble.services.exceptions.InvalidQuestionException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
@@ -42,8 +41,8 @@ public class AnswerController {
 	public QuestionResponse submitAnswer(@RequestBody @Valid SubmitAnswerRequest request,
 			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId)
 			throws SessionNotFoundException, SessionExpiredException, ResourceNotFoundException,
-			ServiceException, TestAlreadyCompletedException, AnswerAlreadySubmittedException,
-			InvalidQuestionException, InvalidAnswerException {
+			ServiceException, TestAlreadyCompletedException, InvalidQuestionException,
+			InvalidAnswerException {
 		try {
 			LOG.info("START >>> submitAnswer");
 			return answerService.submitAnswer(request, sessionId);

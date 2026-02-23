@@ -11,7 +11,6 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ovh.electricowl.bubble.services.exceptions.AnswerAlreadySubmittedException;
 import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.TestAlreadyCompletedException;
 
@@ -26,6 +25,8 @@ public class Session {
 	private final Map<Integer, Long> answers = new HashMap<>();
 
 	private boolean completed;
+
+	private Instant expiredAt;
 
 	private Instant lastQuestionDisplayedAt;
 
@@ -74,20 +75,28 @@ public class Session {
 		Duration elapsed = Duration.between(lastQuestionDisplayedAt, Instant.now(clock));
 
 		if (elapsed.compareTo(maxTimePerQuestion) > 0) {
-			LOG.warn("Session expired.");
+
+			// mémorise le moment exact d'expiration (une seule fois)
+			if (expiredAt == null) {
+				expiredAt = Instant.now(clock);
+				LOG.warn("Session expired.");
+			}
 			throw new SessionExpiredException("Session expired, restart the test.");
 		}
 	}
 
-	public void addAnswer(Integer questionId, Long answerId)
-			throws TestAlreadyCompletedException, AnswerAlreadySubmittedException {
+	public boolean shouldBeDeleted(Duration retentionAfterExpiration) {
+		if (expiredAt == null) {
+			return false;
+		}
+
+		return Instant.now(clock).isAfter(expiredAt.plus(retentionAfterExpiration));
+	}
+
+	public void addAnswer(Integer questionId, Long answerId) throws TestAlreadyCompletedException {
 		if (completed) {
 			LOG.warn("Test already completed.");
 			throw new TestAlreadyCompletedException("Test already completed.");
-		}
-		if (answers.containsKey(questionId)) {
-			LOG.warn("Answer already submitted.");
-			throw new AnswerAlreadySubmittedException("Answer already submitted.");
 		}
 		answers.put(questionId, answerId);
 	}

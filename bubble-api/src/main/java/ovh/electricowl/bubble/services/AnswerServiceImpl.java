@@ -14,7 +14,6 @@ import ovh.electricowl.bubble.dto.QuestionResponse;
 import ovh.electricowl.bubble.dto.SubmitAnswerRequest;
 import ovh.electricowl.bubble.entities.Session;
 import ovh.electricowl.bubble.repositories.SessionRepository;
-import ovh.electricowl.bubble.services.exceptions.AnswerAlreadySubmittedException;
 import ovh.electricowl.bubble.services.exceptions.InvalidAnswerException;
 import ovh.electricowl.bubble.services.exceptions.InvalidQuestionException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
@@ -51,8 +50,8 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public QuestionResponse submitAnswer(SubmitAnswerRequest request, UUID sessionId)
 			throws SessionNotFoundException, SessionExpiredException, ResourceNotFoundException,
-			TestAlreadyCompletedException, AnswerAlreadySubmittedException,
-			InvalidQuestionException, InvalidAnswerException, ServiceException {
+			TestAlreadyCompletedException, InvalidQuestionException, InvalidAnswerException,
+			ServiceException {
 		try {
 			LOG.info("START >>> submitAnswer");
 			QuestionResponse response = null;
@@ -64,7 +63,7 @@ public class AnswerServiceImpl implements AnswerService {
 			session.validateAnswerTime();
 			Integer questionOrder = request.getQuestionOrder();
 			Long answerId = request.getAnswerId();
-			if (questionOrder != session.getCurrentQuestionNumber()) {
+			if (questionOrder > session.getCurrentQuestionNumber()) {
 				LOG.warn("Wrong current question number.");
 				throw new InvalidQuestionException("Wrong current question number.");
 			}

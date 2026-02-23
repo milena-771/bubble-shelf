@@ -57,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 			Question entity = questionRepository.findQuestionByOrder(order);
 
-			if (order == 1) {
+			if ((order == 1) && (sessionId == null)) {
 				session = new Session(entity.getOrder(), maxTimePerQuestion, clock);
 				sessionRepository.save(session);
 			} else {
@@ -71,6 +71,7 @@ public class QuestionServiceImpl implements QuestionService {
 			}
 			QuestionResponse response = QuestionMapper.toQuestionResponse(entity, totalQuestions);
 			Long idAnswer = session.getAnswers().getOrDefault(order, 0L);
+			response.setSelectedAnswer(idAnswer);
 			response.getSelectedAnswer();
 			session.startQuestionTimer();
 			sessionRepository.save(session);
@@ -108,6 +109,24 @@ public class QuestionServiceImpl implements QuestionService {
 			throw new ServiceException(e);
 		} finally {
 			LOG.info("END <<< checkValidAnswer");
+		}
+	}
+
+	@Override
+	public QuestionResponse reinitSessionAndGetFirstQuestion(UUID sessionId)
+			throws ServiceException, SessionNotFoundException, ResourceNotFoundException {
+		try {
+			LOG.info("START >>> reinitAndGetQuestion");
+			if (sessionId == null) {
+				LOG.warn("sessionId is required.");
+				throw new ServiceException("sessionId is required.");
+			}
+			Session session = sessionRepository.findById(sessionId)
+					.orElseThrow(SessionNotFoundException::new);
+			sessionRepository.deleteById(session.getId());
+			return getQuestion(1, null);
+		} finally {
+			LOG.info("END <<< reinitAndGetQuestion");
 		}
 	}
 

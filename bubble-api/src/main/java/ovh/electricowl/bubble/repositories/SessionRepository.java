@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.repositories;
 
+import java.time.Duration;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,4 +15,6 @@ public interface SessionRepository {
 	void deleteById(UUID sessionId);
 
 	boolean existsById(UUID sessionId);
+
+	public void purgeExpiredSessions(Duration retention);
 }

@@ -16,6 +16,7 @@ import ovh.electricowl.bubble.dto.QuestionResponse;
 import ovh.electricowl.bubble.services.QuestionService;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.ServiceException;
+import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 
 @RestController
 @RequestMapping("/questions")
@@ -39,6 +40,19 @@ public class QuestionController {
 			return questionService.getQuestion(order, sessionId);
 		} finally {
 			LOG.info("END <<< getQuestionByNumber");
+		}
+	}
+
+	@GetMapping("/restart")
+	@ResponseStatus(HttpStatus.OK)
+	public QuestionResponse restart(
+			@RequestHeader(value = "X-Test-Session-Id", required = true) UUID sessionId)
+			throws ServiceException, SessionNotFoundException, ResourceNotFoundException {
+		try {
+			LOG.info("START >>> restart");
+			return questionService.reinitSessionAndGetFirstQuestion(sessionId);
+		} finally {
+			LOG.info("END <<< restart");
 		}
 	}
 

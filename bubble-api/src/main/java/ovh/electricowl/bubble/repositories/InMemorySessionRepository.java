@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.repositories;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,5 +34,10 @@ public class InMemorySessionRepository implements SessionRepository {
 	@Override
 	public boolean existsById(UUID sessionId) {
 		return sessions.containsKey(sessionId);
+	}
+
+	@Override
+	public void purgeExpiredSessions(Duration retention) {
+		sessions.entrySet().removeIf(entry -> entry.getValue().shouldBeDeleted(retention));
 	}
 }
