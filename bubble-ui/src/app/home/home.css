@@ -1,0 +1,16 @@
+.quiz-wrapper {
+  height:500px;
+  display: flex;
+  justify-content: center;   /* horizontal */
+  align-items: center;       /* vertical */
+}
+
+.quiz-box {
+  text-align: center;
+  /*max-width: 650px;*/
+  /*transform: translateY(-150px); remonte le bloc */
+}
+
+button{
+  font-size: 1.5rem;
+}

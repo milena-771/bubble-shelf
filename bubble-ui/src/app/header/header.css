@@ -1,0 +1,35 @@
+.header-border{
+      border-bottom-width: 3px;
+      border-bottom-style: solid;
+      border-image: 
+        linear-gradient(
+        to right, 
+        orange, 
+        rgb(255, 255, 255)
+        ) 1;
+}
+.luckiest-guy-regular {
+  font-family: 'Luckiest Guy', cursive;
+  font-weight: 400;
+  color: rgb(0,227,129);
+  font-size: 3rem;
+  font-style: normal;
+}
+.gochi-hand-regular {
+  font-family: 'Gochi Hand', cursive;
+  font-weight: 400;
+  color: rgb(255,0,217);
+  font-size: 1.5rem;
+  font-style: normal;
+}
+.chewy-regular {
+  font-family: 'Chewy', system-ui;
+  font-weight: 400;
+  color: rgb(0,227,129);
+  font-size: 3rem;
+  font-style: normal;
+}
+.btn-home {
+  background-color: white;
+  border: none;
+}
