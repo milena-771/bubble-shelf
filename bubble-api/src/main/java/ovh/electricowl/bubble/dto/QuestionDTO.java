@@ -1,6 +1,7 @@
 package ovh.electricowl.bubble.dto;
 
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class QuestionDTO {
 
@@ -8,7 +9,28 @@ public class QuestionDTO {
 
 	private String label;
 
-	private List<AnswerDTO> answers;
+	private Set<AnswerDTO> answers;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(answers, label, order);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		QuestionDTO other = (QuestionDTO) obj;
+		return Objects.equals(answers, other.answers) && Objects.equals(label, other.label)
+				&& Objects.equals(order, other.order);
+	}
 
 	public Integer getOrder() {
 		return order;
@@ -26,11 +48,11 @@ public class QuestionDTO {
 		this.label = label;
 	}
 
-	public List<AnswerDTO> getAnswers() {
+	public Set<AnswerDTO> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<AnswerDTO> answers) {
+	public void setAnswers(Set<AnswerDTO> answers) {
 		this.answers = answers;
 	}
 
@@ -38,5 +60,4 @@ public class QuestionDTO {
 	public String toString() {
 		return "QuestionDTO [order=" + order + ", label=" + label + ", answers=" + answers + "]";
 	}
-
 }

@@ -13,7 +13,7 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  fetchData(questionNum:number) {
+  fetchFirstQuestion(questionNum:number) {
     return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`), {headers: {[this.apiKeyName]: this.apiKeyValue}});
   }
 }

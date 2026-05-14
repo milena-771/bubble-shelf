@@ -2,7 +2,7 @@
 import { AnswerModel } from "./answer-model";
 
 export interface QuestionModel {
-    Answers: AnswerModel[];
+    answers: AnswerModel[];
     label: string;
     order: number;
 }

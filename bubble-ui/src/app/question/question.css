@@ -1,0 +1,10 @@
+.question-wrapper {
+  height:500px;
+  display: flex;
+  justify-content: center;   /* horizontal */
+  align-items: center;       /* vertical */
+}
+
+.question-box {
+  text-align: center;
+}

@@ -1,7 +1,7 @@
 package ovh.electricowl.bubble.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import ovh.electricowl.bubble.dto.AnswerDTO;
 import ovh.electricowl.bubble.dto.ProgressDTO;
@@ -17,7 +17,7 @@ public class QuestionMapper {
 			return null;
 		}
 		QuestionResponse dto = new QuestionResponse();
-		List<AnswerDTO> answers = new ArrayList<>();
+		Set<AnswerDTO> answers = new HashSet<>();
 		for (Answer answerEntity : entity.getAnswers()) {
 			AnswerDTO answerDTO = new AnswerDTO();
 			answerDTO.setId(answerEntity.getId());
