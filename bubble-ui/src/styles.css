@@ -1,13 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 .btn-green{
     background-color:rgb(0,227,129);
+    transition: background-color 0.2s ease;
     color:white;
 }
 
 .btn-green:hover{
-    background-color:white;
-    border: 1px solid rgb(0,227,129);
-    color:rgb(0,227,129);
+    /*background-color: rgb(0, 200, 114);*/
+    background-color: rgb(0, 210, 120);
+    color: white;
+}
+
+.btn-green:disabled {
+    background-color: rgb(140, 170, 155);
+    color: white;
+    cursor: not-allowed;
 }
 
 .chewy-title {

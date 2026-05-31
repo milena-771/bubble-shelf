@@ -8,3 +8,42 @@
 .question-box {
   text-align: center;
 }
+
+.chewy-question {
+  font-family: 'Chewy', system-ui;
+  font-weight: 400;
+  color: rgb(255,195,0);
+  font-size: 2rem;
+  font-style: normal;
+}
+
+.label-quesion{
+  font-size: 1.25rem;
+  font-weight: lighter;
+  padding-top: 8px;
+}
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.form-check-input + label {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+input[class="form-check-input"]:hover + label{
+  border: 2px solid rgba(0,227,129, 0.4);
+  width: 100%;
+}
+
+input[class="form-check-input"]:checked + label,
+input[class="form-check-input"]:focus + label {
+  border: 2px solid rgb(0,227,129);
+  width: 100%;
+}
