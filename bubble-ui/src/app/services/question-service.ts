@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment'; 
 import { QuestionResponse } from '../models/question-response';
+import { SubmitAnswer } from '../models/submit-answer';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,27 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
+
   fetchFirstQuestion(questionNum:number) {
-    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`), {headers: {[this.apiKeyName]: this.apiKeyValue}});
+    let headers = new HttpHeaders({
+        [this.apiKeyName]: this.apiKeyValue
+    });
+    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`), {headers: headers});
+  }
+
+  fetchNextQuestion(sessionId: string, answer: SubmitAnswer) {
+    let headers = new HttpHeaders({
+      [this.apiKeyName]: this.apiKeyValue,
+      'X-Test-Session-Id': sessionId
+    });
+    return this.http.post<QuestionResponse>(this.baseUrl.concat(`/answer`), answer, {headers: headers});    
+  }
+
+  fetchPreviousQuestion(sessionId: string,questionNum:number) {
+    let headers = new HttpHeaders({
+      [this.apiKeyName]: this.apiKeyValue,
+      'X-Test-Session-Id': sessionId
+    });
+    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`), {headers: headers}); 
   }
 }

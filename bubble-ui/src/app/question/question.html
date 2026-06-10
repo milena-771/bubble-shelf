@@ -22,12 +22,10 @@
                     <div class="d-flex justify-content-center">
                         @if (quiz.question.order > 1) {
                             <!-- previous question button -->
-                            <button type="button" class="btn btn-green rounded my-3 me-2"><i class="bi bi-caret-left-fill"></i></button>
+                            <button type="button" class="btn btn-green rounded my-3 me-2" (click)="previousQuestion()"><i class="bi bi-caret-left-fill"></i></button>
                         }
-                        @if (quiz.question.order < quiz.progress.totalQuestionNumber) {
-                            <!-- next question button -->
-                            <button type="button" class="btn btn-green rounded my-3 ms-2" [disabled]="selectedAnswerId() === null || !quiz" (click)="nextQuestion()"><i class="bi bi-caret-right-fill"></i></button>
-                        }
+                        <!-- next question button -->
+                        <button type="button" class="btn btn-green rounded my-3 ms-2" [disabled]="selectedAnswerId() === 0 || !quiz" (click)="nextQuestion()"><i class="bi bi-caret-right-fill"></i></button>
                     </div>
             </div>
         }
