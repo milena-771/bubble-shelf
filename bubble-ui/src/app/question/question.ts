@@ -1,5 +1,6 @@
 import { Component, OnInit, signal, WritableSignal} from '@angular/core';
 import { QuestionService } from '../services/question-service';
+import { SessionService } from '../services/session-service';
 import { QuestionResponse } from '../models/question-response';
 import { SubmitAnswer } from '../models/submit-answer';
 import { Spinner } from '../spinner/spinner';
@@ -18,10 +19,11 @@ export class Question implements OnInit {
   sessionId: WritableSignal<string | null> = signal(null);
   selectedAnswerId = signal<number | 0>(0);
 
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService, private sessionService: SessionService) {}
 
   ngOnInit() {
     this.loading.set(true);
+    this.sessionService.resetSession();
     this.questionService.fetchFirstQuestion(++this.questionNum).subscribe({
       next: (response: QuestionResponse) => {
         console.log("response: ", response);
