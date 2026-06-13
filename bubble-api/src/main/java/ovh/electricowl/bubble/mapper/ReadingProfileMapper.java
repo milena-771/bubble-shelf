@@ -12,7 +12,7 @@ public class ReadingProfileMapper {
 		ProfileDTO dto = new ProfileDTO();
 		dto.setId(entity.getId());
 		dto.setName(entity.getName());
-		dto.setDescription(entity.getName());
+		dto.setDescription(entity.getDescription());
 		return dto;
 	}
 

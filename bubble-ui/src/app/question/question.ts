@@ -1,9 +1,10 @@
-import { Component, OnInit, signal, WritableSignal} from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { QuestionService } from '../services/question-service';
 import { SessionService } from '../services/session-service';
 import { QuestionResponse } from '../models/question-response';
 import { SubmitAnswer } from '../models/submit-answer';
 import { Spinner } from '../spinner/spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -16,10 +17,10 @@ export class Question implements OnInit {
   private questionNum: number = 0;
   dataQuiz: WritableSignal<QuestionResponse | null> = signal(null);
   loading: WritableSignal<boolean> = signal(false);
-  sessionId: WritableSignal<string | null> = signal(null);
+  //sessionId: WritableSignal<string | null> = signal(null);
   selectedAnswerId = signal<number | 0>(0);
 
-  constructor(private questionService: QuestionService, private sessionService: SessionService) {}
+  constructor(private questionService: QuestionService, private sessionService: SessionService, private router: Router) {}
 
   ngOnInit() {
     this.loading.set(true);
@@ -28,7 +29,7 @@ export class Question implements OnInit {
       next: (response: QuestionResponse) => {
         console.log("response: ", response);
         this.dataQuiz.set(response);
-        this.sessionId.set(response.sessionId);
+        this.sessionService.setSessionId(response.sessionId);
         this.loading.set(false);
       },
       error: (error) => {
@@ -53,18 +54,20 @@ export class Question implements OnInit {
       answerId
     };
     console.log("Submitting answer: ", payload);
-    this.questionService.fetchNextQuestion(this.sessionId()!, payload).subscribe({
+    this.questionService.fetchNextQuestion(this.sessionService.getSessionId()!, payload).subscribe({
       next: (response: QuestionResponse) => {
-        console.log("response: ", response);
-        this.dataQuiz.set(response);
-        this.selectedAnswerId.set(response.selectedAnswer);
+        this.sessionService.setQuizCompleted(response.progress.completed);
+        if(!response.progress.completed) { 
+          console.log("response: ", response);
+          this.dataQuiz.set(response);
+          this.selectedAnswerId.set(response.selectedAnswer);
+        } else {
+          this.router.navigate(['/results']);
+        }
         this.loading.set(false);
       },
       error: (error) => {
         console.error(error);
-        if (error.status === 410) {
-          
-        }
         this.loading.set(false);
       }
     });
@@ -73,7 +76,7 @@ export class Question implements OnInit {
   previousQuestion() {
     this.loading.set(true);
     let questionOrder = this.dataQuiz()?.question.order;
-    this.questionService.fetchPreviousQuestion(this.sessionId()!, --questionOrder!).subscribe({
+    this.questionService.fetchPreviousQuestion(this.sessionService.getSessionId()!, --questionOrder!).subscribe({
       next: (response: QuestionResponse) => {
         console.log("response: ", response);
         this.dataQuiz.set(response);

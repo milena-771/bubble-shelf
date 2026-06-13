@@ -9,11 +9,14 @@ export class SessionService {
     
     private isQuizCompleted: boolean = false;
 
+    private sessionId: string | null = null;
+
     constructor() {}
 
     resetSession(): void {
         this.isSessionExpired = false;
         this.isQuizCompleted = false;
+        this.sessionId = null;
     }
 
     setQuizCompleted(completed: boolean): void {
@@ -32,6 +35,12 @@ export class SessionService {
         return this.isSessionExpired;
     }
 
-
+    setSessionId(sessionId: string): void {
+        this.sessionId = sessionId;
+    }
+    
+    getSessionId(): string | null {
+        return this.sessionId;
+    }
 
 }
