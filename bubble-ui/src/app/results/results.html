@@ -1,6 +1,13 @@
 @if(loading()) {
     <app-spinner></app-spinner>
-} else {
+} 
     <p>results works!</p>
-}
+    <div style="max-width: 500px">
+    <canvas
+        baseChart
+        [data]="pieChartData"
+        [type]="pieChartType">
+    </canvas>
+    </div>
+
 
