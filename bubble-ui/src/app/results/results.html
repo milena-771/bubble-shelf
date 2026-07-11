@@ -1,13 +1,40 @@
-@if(loading()) {
-    <app-spinner></app-spinner>
-} 
-    <p>results works!</p>
-    <div style="max-width: 500px">
-    <canvas
-        baseChart
-        [data]="pieChartData"
-        [type]="pieChartType">
-    </canvas>
+<main class="results-wrapper">
+    <div class="results-container row">
+        @if(loading()) {
+            <app-spinner></app-spinner>
+        }
+        <div class="col-md-5 chart-container">
+            <div  style="max-width: 400px">
+                <canvas
+                    baseChart
+                    [data]="pieChartData"
+                    [type]="pieChartType"
+                    [options]="pieChartOptions">
+                </canvas>
+            </div>  
+        </div>
+        <div class="col-md-7">
+            @if(results(); as result) {
+                @for (profile of result.profileDescription; track profile.name) {              
+                    <div  class="mt-2 profile-title" [style.color]="profileColors[profile.id]">{{ profileLabels[profile.id] || profile.name }}</div> 
+                    <div class="mb-4 font-result">{{ profile.description }}</div>
+                }
+            }
+        </div>
     </div>
+    <div class="recommendations-container row">
+        <div class="chewy-recommendation">Recommendations:</div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-5 g-3 mx-2">
+            @if(results(); as result) {
+                @for (comic of result.recommendedComics; track comic.id) {              
+                    <div class="mb-2 font-result">
+                        <img src="./front_cover/{{ comic.frontCover }}" alt="{{ comic.title }}" class="comic-cover me-2" >
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</main>
 
 

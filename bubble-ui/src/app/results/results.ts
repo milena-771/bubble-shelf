@@ -5,7 +5,7 @@ import { ResultModel } from '../models/result-model';
 import { SessionService } from '../services/session-service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js/auto';
-import { READING_PROFILE_LABELS } from '../constants/reading-profiles.const';
+import { READING_PROFILE_LABELS, READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
 
 @Component({
   selector: 'app-results',
@@ -17,8 +17,10 @@ export class Results implements OnInit{
 
   results: WritableSignal<ResultModel | null> = signal(null);
   loading: WritableSignal<boolean> = signal(false);
-
-  public pieChartType: ChartType = 'pie';
+  profileLabels = READING_PROFILE_LABELS;
+  profileColors = READING_PROFILE_COLORS;
+  
+  public readonly pieChartType = 'pie' as const;
 
   public pieChartData: ChartConfiguration<'pie'>['data'] = {
     labels: [],
@@ -28,6 +30,17 @@ export class Results implements OnInit{
       }
     ]
   };
+
+  public pieChartOptions: ChartConfiguration<'pie'>['options'] = {
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#2F3640'
+        }
+      }
+    }
+  }
 
   constructor(private resultsService: ResultsService, private sessionService: SessionService) { }
 
@@ -43,7 +56,8 @@ export class Results implements OnInit{
           labels: Object.keys(response.statistics).map(key => READING_PROFILE_LABELS[key] || key.toString()),
           datasets: [
             {
-              data: Object.values(response.statistics)
+              data: Object.values(response.statistics),
+              backgroundColor: Object.keys(response.statistics).map(key => READING_PROFILE_COLORS[key] || '#000')
             }
           ]
         };

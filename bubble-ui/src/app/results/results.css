@@ -1,0 +1,46 @@
+.results-wrapper{
+    height: auto;
+    border-top-right-radius: 200px;
+    border-top-left-radius: 200px;
+    background-color: rgb(255,240,179)/*rgb(255,195,0)*/;
+}
+
+.chart-container{
+    display: flex;  
+    justify-content: center;
+}
+
+.results-container {
+    /*display: flex;*/
+    padding: 50px;
+    align-items: center;
+}
+
+.profile-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.chewy-recommendation {
+  font-family: 'Chewy', system-ui;
+  font-weight: 400;
+  font-size: 2rem;
+  font-style: normal;
+      color: #4A4538
+}
+
+.font-result {
+    font-size: 18px;
+    color: #2F3640
+}
+
+.recommendations-container {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+
+.comic-cover {
+    width: 70%;
+    height: auto;
+}
