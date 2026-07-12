@@ -1,15 +1,18 @@
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, WritableSignal, signal, ViewChild} from '@angular/core';
 import { Spinner } from '../spinner/spinner';
+import { ComicDetails } from '../comic-details/comic-details';
 import { ResultsService } from '../services/results-service';
 import { ResultModel } from '../models/result-model';
 import { SessionService } from '../services/session-service';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartType } from 'chart.js/auto';
+import { ChartConfiguration } from 'chart.js/auto';
 import { READING_PROFILE_LABELS, READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
+import { ComicModel } from '../models/comic-model';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-results',
-  imports: [Spinner, BaseChartDirective],
+  imports: [Spinner, BaseChartDirective, ComicDetails],
   templateUrl: './results.html',
   styleUrl: './results.css',
 })
@@ -42,6 +45,9 @@ export class Results implements OnInit{
     }
   }
 
+  @ViewChild(ComicDetails)
+  comicDetails!: ComicDetails;
+
   constructor(private resultsService: ResultsService, private sessionService: SessionService) { }
 
   ngOnInit(): void {
@@ -68,5 +74,15 @@ export class Results implements OnInit{
         this.loading.set(false);
       }
     });
+  }
+
+  openComicDetails(comic: ComicModel) {
+    this.comicDetails.selectedComic.set(comic);
+    console.log("Selected comic: ", this.comicDetails.selectedComic());
+    const modalElement = document.getElementById('comicDetailsModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }

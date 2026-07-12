@@ -7,7 +7,6 @@ export interface ComicModel {
     publicationYear: number;
     genre: string;
     frontCover: string;
-    description: string;
     editor: string;
     summary: string;
 }

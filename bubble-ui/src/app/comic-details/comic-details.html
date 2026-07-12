@@ -1,0 +1,32 @@
+<div class="modal fade" id="comicDetailsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+    <div class="modal-content">
+        @if(selectedComic(); as comic) {
+            <div class="modal-header">
+                <h5 class="modal-title">{{ comic.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-0 p-0">
+
+                    <div class="row">
+                        <div class="col-12 col-md-8 order-1 order-md-2">
+                            <div>{{ comic.author }}</div>
+                            <div>{{ comic.publicationYear }}</div>
+                            <div>{{ comic.editor}}</div>
+                            <div>{{ comic.country }}</div>
+                            <div>{{ comic.genre }}</div>
+                            <div>{{ comic.summary }}</div>
+                        </div>
+                        <div class="col-12 col-md-4 order-2 order-md-1 text-center mt-3 mt-md-0">
+                            <img src="./front_cover/{{comic.frontCover}}" class="img-fluid comic-cover-modal" alt="{{comic.title}}">
+                        </div>
+
+                    </div>       
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        }
+    </div>
+  </div>
+</div>

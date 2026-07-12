@@ -1,0 +1,11 @@
+.comic-cover-modal {
+  max-width: 180px;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .comic-cover-modal {
+    max-width: 100%;
+  }
+}

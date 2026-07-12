@@ -28,13 +28,16 @@
             @if(results(); as result) {
                 @for (comic of result.recommendedComics; track comic.id) {              
                     <div class="mb-2 font-result">
-                        <img src="./front_cover/{{ comic.frontCover }}" alt="{{ comic.title }}" class="comic-cover me-2" >
+                        <button type="button" class="btn btn-link p-0" (click)="openComicDetails(comic)">
+                            <img src="./front_cover/{{ comic.frontCover }}" alt="{{ comic.title }}" class="comic-cover me-2" >
+                        </button>
                     </div>
                 }
             }
         </div>
 
     </div>
+    <app-comic-details></app-comic-details>
 </main>
 
 
