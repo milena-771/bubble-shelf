@@ -1,9 +1,11 @@
-    <header class="header header-border">
+    <header class="header" [class.header-border]="header.config().showBorderBottom">
         <nav class="navbar p-0">
-            <button routerLink="" class="btn-home mx-2">
-                <span class="chewy-regular me-1">Bubble</span>
-                <span class="gochi-hand-regular ">shelf</span>
-            </button>
+            @if(header.config().showBubbleLogo) {
+                <button routerLink="" class="btn-home mx-2">
+                    <span class="chewy-regular me-1">Bubble</span>
+                    <span class="gochi-hand-regular ">shelf</span>
+                </button>
+            }
             <div class="container-fluid">
             </div>
         </nav>

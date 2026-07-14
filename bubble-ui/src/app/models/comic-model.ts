@@ -9,4 +9,5 @@ export interface ComicModel {
     frontCover: string;
     editor: string;
     summary: string;
+    idProfile: number;
 }

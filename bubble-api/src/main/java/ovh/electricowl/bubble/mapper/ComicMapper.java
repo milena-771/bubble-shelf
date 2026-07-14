@@ -20,6 +20,7 @@ public class ComicMapper {
 		dto.setFrontCover(entity.getFrontCover());
 		dto.setEditor(entity.getEditor());
 		dto.setSummary(entity.getSummary());
+		dto.setIdProfile(entity.getIdProfile());
 		return dto;
 
 	}

@@ -6,20 +6,34 @@
     background-color: rgb(255,240,179)/*rgb(255,195,0)*/;
 }
 
+.result-title{
+    padding-top: 50px;
+    padding-bottom: 35px;
+    padding-left: 50px;
+    font-family: 'Chewy', system-ui;
+    font-weight: 400;
+    font-size: 2rem;
+    font-style: normal;
+    color: #4A4538;
+}
+
 .chart-container{
-    display: flex;  
+    display: flex;
     justify-content: center;
 }
 
 .results-container {
-    /*display: flex;*/
-    padding: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
     align-items: center;
 }
 
 .profile-title {
-    font-size: 25px;
-    font-weight: bold;
+  font-family: 'Gochi Hand', cursive;
+  font-weight: 400;
+  font-size: 2rem;
+  font-style: normal;
 }
 
 .chewy-recommendation {
@@ -27,7 +41,9 @@
   font-weight: 400;
   font-size: 2rem;
   font-style: normal;
-      color: #4A4538
+  color: #4A4538;
+  padding-left: 50px;
+    
 }
 
 .font-result {

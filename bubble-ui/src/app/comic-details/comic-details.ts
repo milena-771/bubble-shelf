@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { WritableSignal, signal } from '@angular/core';
 import { ComicModel } from '../models/comic-model';
+import { READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
 
 @Component({
   selector: 'app-comic-details',
@@ -11,4 +12,5 @@ import { ComicModel } from '../models/comic-model';
 export class ComicDetails {
 
     selectedComic: WritableSignal<ComicModel | null> = signal(null);
+    profileColors = READING_PROFILE_COLORS;
 }

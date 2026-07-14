@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal, signal, ViewChild} from '@angular/core';
+import { Component, OnInit, WritableSignal, signal, ViewChild, inject} from '@angular/core';
 import { Spinner } from '../spinner/spinner';
 import { ComicDetails } from '../comic-details/comic-details';
 import { ResultsService } from '../services/results-service';
@@ -8,6 +8,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js/auto';
 import { READING_PROFILE_LABELS, READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
 import { ComicModel } from '../models/comic-model';
+import { HeaderService } from '../services/header-service';
 declare var bootstrap: any;
 
 @Component({
@@ -45,12 +46,17 @@ export class Results implements OnInit{
     }
   }
 
+  header = inject(HeaderService);
+
   @ViewChild(ComicDetails)
   comicDetails!: ComicDetails;
 
   constructor(private resultsService: ResultsService, private sessionService: SessionService) { }
 
   ngOnInit(): void {
+    this.header.setConfig({
+      showBorderBottom: false
+    });
     const sessionId = this.sessionService.getSessionId();
     this.loading.set(true);
     this.resultsService.fetchResults(sessionId!).subscribe({

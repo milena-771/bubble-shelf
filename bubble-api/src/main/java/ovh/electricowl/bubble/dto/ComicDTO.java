@@ -22,6 +22,8 @@ public class ComicDTO {
 
 	private String summary;
 
+	private Long idProfile;
+
 	public Long getId() {
 		return id;
 	}
@@ -102,11 +104,19 @@ public class ComicDTO {
 		this.summary = summary;
 	}
 
+	public Long getIdProfile() {
+		return idProfile;
+	}
+
+	public void setIdProfile(Long idProfile) {
+		this.idProfile = idProfile;
+	}
+
 	@Override
 	public String toString() {
-		return "ComicResponse [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author="
-				+ author + ", country=" + country + ", publicationYear=" + publicationYear
-				+ ", genre=" + genre + ", frontCover=" + frontCover + ", editor=" + editor
-				+ ", summary=" + summary + "]";
+		return "ComicDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author
+				+ ", country=" + country + ", publicationYear=" + publicationYear + ", genre="
+				+ genre + ", frontCover=" + frontCover + ", editor=" + editor + ", summary="
+				+ summary + ", idProfile=" + idProfile + "]";
 	}
 }

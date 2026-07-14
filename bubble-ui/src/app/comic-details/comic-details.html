@@ -2,30 +2,47 @@
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
     <div class="modal-content">
         @if(selectedComic(); as comic) {
-            <div class="modal-header">
-                <h5 class="modal-title">{{ comic.title }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body m-0 p-0">
-
+            <div class="modal-body m-md-0 p-md-0">
                     <div class="row">
-                        <div class="col-12 col-md-8 order-1 order-md-2">
-                            <div>{{ comic.author }}</div>
-                            <div>{{ comic.publicationYear }}</div>
-                            <div>{{ comic.editor}}</div>
-                            <div>{{ comic.country }}</div>
-                            <div>{{ comic.genre }}</div>
-                            <div>{{ comic.summary }}</div>
+                        <div class="col-12 col-md-6 order-1 order-md-2">
+                            <button type="button" class="btn-close position-absolute top-0 end-0 close-details-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="modal-title text-center mt-md-2 mb-4" [style.color]="profileColors[comic.idProfile]">{{ comic.title }}</h5>
+                            <div class="comic-infos">
+                                <div class="mb-2">
+                                    <div class="comic-details-field">Author.s</div>        
+                                    <div>{{ comic.author }}</div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="comic-details-field">Publication year</div> 
+                                    <div>{{ comic.publicationYear }}</div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="comic-details-field">Editor</div> 
+                                    <div>{{ comic.editor}}</div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="comic-details-field">Country</div> 
+                                    <div>{{ comic.country }}</div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="comic-details-field">Genre</div> 
+                                    <div>{{ comic.genre }}</div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="comic-details-field">Summary</div> 
+                                    <div>{{ comic.summary }}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-4 order-2 order-md-1 text-center mt-3 mt-md-0">
-                            <img src="./front_cover/{{comic.frontCover}}" class="img-fluid comic-cover-modal" alt="{{comic.title}}">
+                        <div class="col-12 col-md-6 order-2 order-md-1 text-center mt-3 mt-md-0">
+                            <img src="./front_cover/{{comic.frontCover}}" class="img-fluid comic-cover-modal " alt="{{comic.title}}">
                         </div>
 
                     </div>       
             </div>
-            <div class="modal-footer">
+            <!--<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+            </div>-->
         }
     </div>
   </div>

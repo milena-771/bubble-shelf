@@ -60,6 +60,7 @@ public class ComicRepository {
 			data.setGenre(rs.getString("c_genre"));
 			data.setEditor(rs.getString("c_editor"));
 			data.setSummary(rs.getString("c_summary"));
+			data.setIdProfile(rs.getLong("c_reading_profile_id"));
 			return data;
 		}
 

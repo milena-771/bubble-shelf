@@ -1,10 +1,14 @@
 <main class="results-wrapper">
+
     <div class="results-container row">
+
         @if(loading()) {
             <app-spinner></app-spinner>
         }
+
+        <div class="col-12 result-title">Your profile:</div>
         <div class="col-md-5 chart-container">
-            <div  style="max-width: 400px">
+            <div style="max-width: 400px">
                 <canvas
                     baseChart
                     [data]="pieChartData"
