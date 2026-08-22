@@ -1,0 +1,21 @@
+.terms-wrapper {
+  min-height: 40dvh;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding-left: 60px;
+  padding-right: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: flex-start;
+  text-align: justify;
+}
+
+.chewy-title {
+  font-family: 'Chewy', system-ui;
+  font-weight: 400;
+  color: rgb(255,195,0);
+  font-size: 2rem;
+  font-style: normal;
+}
+

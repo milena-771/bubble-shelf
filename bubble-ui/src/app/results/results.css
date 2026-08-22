@@ -1,5 +1,4 @@
 .results-wrapper{
-    /*height: auto;*/
     height :auto;
     border-top-right-radius: 200px;
     border-top-left-radius: 200px;
@@ -60,4 +59,10 @@
 .comic-cover {
     width: 70%;
     height: auto;
+}
+
+.btn-brown{
+    background-color:#4A4538;
+    transition: background-color 0.2s ease;
+    color:white;
 }

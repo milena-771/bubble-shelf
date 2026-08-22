@@ -27,7 +27,6 @@ export class Question implements OnInit {
     this.sessionService.resetSession();
     this.questionService.fetchFirstQuestion(++this.questionNum).subscribe({
       next: (response: QuestionResponse) => {
-        console.log("response: ", response);
         this.dataQuiz.set(response);
         this.sessionService.setSessionId(response.sessionId);
         this.loading.set(false);
@@ -58,7 +57,6 @@ export class Question implements OnInit {
       next: (response: QuestionResponse) => {
         this.sessionService.setQuizCompleted(response.progress.completed);
         if(!response.progress.completed) { 
-          console.log("response: ", response);
           this.dataQuiz.set(response);
           this.selectedAnswerId.set(response.selectedAnswer);
         } else {
@@ -78,7 +76,6 @@ export class Question implements OnInit {
     let questionOrder = this.dataQuiz()?.question.order;
     this.questionService.fetchPreviousQuestion(this.sessionService.getSessionId()!, --questionOrder!).subscribe({
       next: (response: QuestionResponse) => {
-        console.log("response: ", response);
         this.dataQuiz.set(response);
         this.selectedAnswerId.set(response.selectedAnswer);
         this.loading.set(false);

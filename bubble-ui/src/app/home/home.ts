@@ -1,6 +1,7 @@
 import { Component, inject} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HeaderService } from '../services/header-service';
+import { FooterService } from '../services/footer-service';
 
 @Component({
   selector: 'home',
@@ -11,10 +12,14 @@ import { HeaderService } from '../services/header-service';
 export class Home {
 
   header = inject(HeaderService);
+  footer = inject(FooterService);
 
   ngOnInit() {
     this.header.setConfig({
       showBorderBottom: true
+    });
+    this.footer.setConfig({
+      isResultsPage: false
     });
   }
 

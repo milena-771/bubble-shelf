@@ -9,6 +9,8 @@ import { ChartConfiguration } from 'chart.js/auto';
 import { READING_PROFILE_LABELS, READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
 import { ComicModel } from '../models/comic-model';
 import { HeaderService } from '../services/header-service';
+import { FooterService } from '../services/footer-service';
+import { Router } from '@angular/router';
 declare var bootstrap: any;
 
 @Component({
@@ -23,6 +25,7 @@ export class Results implements OnInit{
   loading: WritableSignal<boolean> = signal(false);
   profileLabels = READING_PROFILE_LABELS;
   profileColors = READING_PROFILE_COLORS;
+  comicsToShow: WritableSignal<ComicModel[]> = signal([]);
   
   public readonly pieChartType = 'pie' as const;
 
@@ -46,24 +49,34 @@ export class Results implements OnInit{
     }
   }
 
+  footer = inject(FooterService);
   header = inject(HeaderService);
 
   @ViewChild(ComicDetails)
   comicDetails!: ComicDetails;
 
-  constructor(private resultsService: ResultsService, private sessionService: SessionService) { }
+  constructor(private resultsService: ResultsService, private sessionService: SessionService, private router: Router) { }
 
   ngOnInit(): void {
-    this.header.setConfig({
-      showBorderBottom: false
-    });
-    const sessionId = this.sessionService.getSessionId();
+    this.header.setConfig({showBorderBottom: false});
+    this.footer.setConfig({isResultsPage: true});
+    const sessionId = this.sessionService.getSessionId() !== null ? this.sessionService.getSessionId() : null;
+    if(!sessionId) {
+      console.log("Session ID is null. Cannot fetch results.");
+      this.router.navigate(['/']);
+    }
     this.loading.set(true);
+
     this.resultsService.fetchResults(sessionId!).subscribe({
       next: (response: ResultModel) => {
-        console.log("response: ", response);
         this.results.set(response);
-        //this.pieChartData.labels = Array.from(response.statistics.keys()).map(key => key.toString());
+
+        if(response.recommendedComics.length >= 5) {
+          this.comicsToShow.set(response.recommendedComics.slice(0, 5));
+        } else {
+          this.comicsToShow.set(response.recommendedComics);
+        }
+
         this.pieChartData = {
           labels: Object.keys(response.statistics).map(key => READING_PROFILE_LABELS[key] || key.toString()),
           datasets: [
@@ -78,17 +91,25 @@ export class Results implements OnInit{
       error: (error) => {
         console.log("Error fetching results: ", error);
         this.loading.set(false);
+        if(error.statusText === "Unknown Error") {
+          this.sessionService.setSessionExpired(true);
+          
+        }
       }
     });
   }
 
   openComicDetails(comic: ComicModel) {
     this.comicDetails.selectedComic.set(comic);
-    console.log("Selected comic: ", this.comicDetails.selectedComic());
     const modalElement = document.getElementById('comicDetailsModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
     }
+  }
+
+  loadMoreComics() {
+    const currentComics = this.results()?.recommendedComics || [];
+    this.comicsToShow.set(currentComics);
   }
 }

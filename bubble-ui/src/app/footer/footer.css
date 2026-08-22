@@ -1,0 +1,17 @@
+.footer {
+  flex-shrink: 0;
+  color: #A8A8A8;
+
+    a {
+        color: inherit;
+        text-decoration: none;
+        &:hover {
+            color: rgb(0,227,129);
+            font-weight: normal;
+        }
+    }
+}
+
+.footer-background-results{
+    background-color: rgb(255,240,179)
+}
