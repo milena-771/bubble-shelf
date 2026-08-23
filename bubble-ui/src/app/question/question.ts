@@ -1,10 +1,12 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal, inject} from '@angular/core';
 import { QuestionService } from '../services/question-service';
 import { SessionService } from '../services/session-service';
 import { QuestionResponse } from '../models/question-response';
 import { SubmitAnswer } from '../models/submit-answer';
 import { Spinner } from '../spinner/spinner';
 import { Router } from '@angular/router';
+import { HeaderService } from '../services/header-service';
+import { FooterService } from '../services/footer-service';
 
 @Component({
   selector: 'app-question',
@@ -20,9 +22,19 @@ export class Question implements OnInit {
   //sessionId: WritableSignal<string | null> = signal(null);
   selectedAnswerId = signal<number | 0>(0);
 
+  footer = inject(FooterService);
+  header = inject(HeaderService);
+
   constructor(private questionService: QuestionService, private sessionService: SessionService, private router: Router) {}
 
   ngOnInit() {
+    this.header.setConfig({
+      showBorderBottom: true,
+      showRestartBtn: false
+    });
+    this.footer.setConfig({
+      isResultsPage: false
+    });
     this.loading.set(true);
     this.sessionService.resetSession();
     this.questionService.fetchFirstQuestion(++this.questionNum).subscribe({
@@ -85,5 +97,9 @@ export class Question implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  restart(){
+    window.location.reload();
   }
 }

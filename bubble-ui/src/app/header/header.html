@@ -6,6 +6,11 @@
                     <span class="gochi-hand-regular ">shelf</span>
                 </button>
             }
+            @if(header.config().showRestartBtn) {
+                <div class="d-flex justify-content-end m-3">
+                    <button routerLink="/question" class="btn btn-restart rounded mt-3"><i class="bi bi-arrow-clockwise me-2 "></i>Restart</button>
+                </div>
+            }
             <div class="container-fluid">
             </div>
         </nav>

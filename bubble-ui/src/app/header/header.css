@@ -33,3 +33,9 @@
   background-color: white;
   border: none;
 }
+
+.btn-restart {
+    background-color:#4A4538;
+    transition: background-color 0.2s ease;
+    color:white;
+}

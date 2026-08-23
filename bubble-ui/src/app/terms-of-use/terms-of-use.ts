@@ -1,10 +1,11 @@
 import { Component, inject} from '@angular/core';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-terms-of-use',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './terms-of-use.html',
   styleUrl: './terms-of-use.css',
 })
@@ -15,7 +16,8 @@ export class TermsOfUse {
 
     ngOnInit() {
     this.header.setConfig({
-      showBorderBottom: true
+      showBorderBottom: true,
+      showRestartBtn: false
     });
     this.footer.setConfig({
       isResultsPage: false

@@ -5,6 +5,10 @@
   align-items: center;       /* vertical */
 }
 
+.btn-restart-question{
+  font-size: 1.25rem;
+}
+
 .question-box {
   text-align: center;
 }

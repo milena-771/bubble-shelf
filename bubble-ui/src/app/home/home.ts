@@ -16,7 +16,8 @@ export class Home {
 
   ngOnInit() {
     this.header.setConfig({
-      showBorderBottom: true
+      showBorderBottom: true,
+      showRestartBtn: false
     });
     this.footer.setConfig({
       isResultsPage: false

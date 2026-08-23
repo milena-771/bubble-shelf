@@ -58,7 +58,7 @@ export class Results implements OnInit{
   constructor(private resultsService: ResultsService, private sessionService: SessionService, private router: Router) { }
 
   ngOnInit(): void {
-    this.header.setConfig({showBorderBottom: false});
+    this.header.setConfig({showBorderBottom: false, showRestartBtn: true});
     this.footer.setConfig({isResultsPage: true});
     const sessionId = this.sessionService.getSessionId() !== null ? this.sessionService.getSessionId() : null;
     if(!sessionId) {
