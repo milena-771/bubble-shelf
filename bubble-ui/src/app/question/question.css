@@ -27,6 +27,14 @@
   padding-top: 8px;
 }
 
+.progress {
+  height: 5px;
+}
+
+.progress-bar {
+  background-color: rgb(255,0,217);
+}
+
 input[type="radio"] {
   position: absolute;
   opacity: 0;

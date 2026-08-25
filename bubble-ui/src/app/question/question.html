@@ -10,10 +10,15 @@
         }
 
         @if (dataQuiz(); as quiz) {
-            <div class="row mb-3">
+            <div class="row mb-2">
                 <div class="col-md-4 chewy-question ">Question {{ quiz.question.order}} :</div> 
                 <div class="col-md-8 text-nowrap label-quesion">{{ quiz.question.label }}</div>
             </div>
+            @if (progressBar(); as progress) {
+                <div class="progress mb-3 ms-5 me-4">
+                    <div class="progress-bar" role="progressbar" style.width="{{ currentPercentage() }}%" aria-valuenow="{{ progress.currentQuestionNumber }}" aria-valuemin="0" aria-valuemax="progress.totalQuestionNumber"></div>
+                </div>
+            }
             @for (answer of quiz.question.answers; track answer.id) {
                 <div class="form-check my-1">
                     <input class="form-check-input" type="radio" name="answer" id="{{ answer.id }}" [value]="answer.id" (change)="onAnswerSelected(answer.id)" [checked]="selectedAnswerId() === answer.id">

@@ -7,6 +7,7 @@ import { Spinner } from '../spinner/spinner';
 import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
+import { ProgressModel } from '../models/progress-model';
 
 @Component({
   selector: 'app-question',
@@ -18,9 +19,11 @@ export class Question implements OnInit {
 
   private questionNum: number = 0;
   dataQuiz: WritableSignal<QuestionResponse | null> = signal(null);
+  progressBar: WritableSignal<ProgressModel | null> = signal(null);
   loading: WritableSignal<boolean> = signal(false);
   //sessionId: WritableSignal<string | null> = signal(null);
   selectedAnswerId = signal<number | 0>(0);
+  currentPercentage: WritableSignal<number> = signal(0);
 
   footer = inject(FooterService);
   header = inject(HeaderService);
@@ -39,7 +42,9 @@ export class Question implements OnInit {
     this.sessionService.resetSession();
     this.questionService.fetchFirstQuestion(++this.questionNum).subscribe({
       next: (response: QuestionResponse) => {
+        console.log("First question response: ", response);
         this.dataQuiz.set(response);
+        this.progressBar.set(response.progress);
         this.sessionService.setSessionId(response.sessionId);
         this.loading.set(false);
       },
@@ -68,6 +73,8 @@ export class Question implements OnInit {
     this.questionService.fetchNextQuestion(this.sessionService.getSessionId()!, payload).subscribe({
       next: (response: QuestionResponse) => {
         this.sessionService.setQuizCompleted(response.progress.completed);
+        this.progressBar.set(response.progress);
+        this.currentPercentage.set((response.progress.currentQuestionNumber / response.progress.totalQuestionNumber) * 100);
         if(!response.progress.completed) { 
           this.dataQuiz.set(response);
           this.selectedAnswerId.set(response.selectedAnswer);
@@ -89,6 +96,8 @@ export class Question implements OnInit {
     this.questionService.fetchPreviousQuestion(this.sessionService.getSessionId()!, --questionOrder!).subscribe({
       next: (response: QuestionResponse) => {
         this.dataQuiz.set(response);
+        this.progressBar.set(response.progress);
+        this.currentPercentage.set((response.progress.currentQuestionNumber / response.progress.totalQuestionNumber) * 100);
         this.selectedAnswerId.set(response.selectedAnswer);
         this.loading.set(false);
       },
