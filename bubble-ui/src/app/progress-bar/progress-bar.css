@@ -1,0 +1,7 @@
+.progress {
+  height: 5px;
+}
+
+.progress-bar-pink {
+  background-color: rgb(255,0,217);
+}

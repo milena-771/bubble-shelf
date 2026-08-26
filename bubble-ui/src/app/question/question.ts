@@ -4,6 +4,7 @@ import { SessionService } from '../services/session-service';
 import { QuestionResponse } from '../models/question-response';
 import { SubmitAnswer } from '../models/submit-answer';
 import { Spinner } from '../spinner/spinner';
+import { ProgressBar } from '../progress-bar/progress-bar';
 import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
@@ -11,7 +12,7 @@ import { ProgressModel } from '../models/progress-model';
 
 @Component({
   selector: 'app-question',
-  imports: [Spinner],
+  imports: [Spinner, ProgressBar],
   templateUrl: './question.html',
   styleUrl: './question.css',
 })
@@ -24,6 +25,7 @@ export class Question implements OnInit {
   //sessionId: WritableSignal<string | null> = signal(null);
   selectedAnswerId = signal<number | 0>(0);
   currentPercentage: WritableSignal<number> = signal(0);
+  progressColorPink: string = 'progress-bar-pink';
 
   footer = inject(FooterService);
   header = inject(HeaderService);

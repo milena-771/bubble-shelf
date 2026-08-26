@@ -15,9 +15,7 @@
                 <div class="col-md-8 text-nowrap label-quesion">{{ quiz.question.label }}</div>
             </div>
             @if (progressBar(); as progress) {
-                <div class="progress mb-3 ms-5 me-4">
-                    <div class="progress-bar" role="progressbar" style.width="{{ currentPercentage() }}%" aria-valuenow="{{ progress.currentQuestionNumber }}" aria-valuemin="0" aria-valuemax="progress.totalQuestionNumber"></div>
-                </div>
+                <app-progress-bar [backgroundColor]="progressColorPink" [progressPercentage]="currentPercentage()" [currentQuestionNumber]="progress.currentQuestionNumber" [totalQuestionNumber]="progress.totalQuestionNumber"></app-progress-bar>
             }
             @for (answer of quiz.question.answers; track answer.id) {
                 <div class="form-check my-1">
