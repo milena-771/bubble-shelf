@@ -67,7 +67,7 @@ export class Results implements OnInit{
     }
     this.loading.set(true);
 
-    this.resultsService.fetchResults(sessionId!).subscribe({
+    this.resultsService.fetchResults().subscribe({ 
       next: (response: ResultModel) => {
         this.results.set(response);
 

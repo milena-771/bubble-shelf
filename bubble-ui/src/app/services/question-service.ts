@@ -9,32 +9,18 @@ import { SubmitAnswer } from '../models/submit-answer';
 })
 export class QuestionService {
   private baseUrl = environment.apiUrl;
-  private apiKeyName = environment.keyName;
-  private apiKeyValue = environment.keyValue;
 
   constructor(private http: HttpClient) {}
 
-
   fetchFirstQuestion(questionNum:number) {
-    let headers = new HttpHeaders({
-        [this.apiKeyName]: this.apiKeyValue
-    });
-    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`), {headers: headers});
+    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`));
   }
 
-  fetchNextQuestion(sessionId: string, answer: SubmitAnswer) {
-    let headers = new HttpHeaders({
-      [this.apiKeyName]: this.apiKeyValue,
-      'X-Test-Session-Id': sessionId
-    });
-    return this.http.post<QuestionResponse>(this.baseUrl.concat(`/answer`), answer, {headers: headers});    
+  fetchNextQuestion( answer: SubmitAnswer) {
+    return this.http.post<QuestionResponse>(this.baseUrl.concat(`/answer`), answer);    
   }
 
-  fetchPreviousQuestion(sessionId: string,questionNum:number) {
-    let headers = new HttpHeaders({
-      [this.apiKeyName]: this.apiKeyValue,
-      'X-Test-Session-Id': sessionId
-    });
-    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`), {headers: headers}); 
+  fetchPreviousQuestion(questionNum:number) {
+    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`)); 
   }
 }

@@ -8,16 +8,10 @@ import { ResultModel } from '../models/result-model';
 })
 export class ResultsService {
     private baseUrl = environment.apiUrl;
-    private apiKeyName = environment.keyName;
-    private apiKeyValue = environment.keyValue;
     
     constructor(private http: HttpClient) {}
 
-    fetchResults(sessionId: string) {
-        let headers = new HttpHeaders({
-            [this.apiKeyName]: this.apiKeyValue,
-            'X-Test-Session-Id': sessionId
-        });
-        return this.http.get<ResultModel>(this.baseUrl.concat(`/results`), {headers: headers});
+    fetchResults() {
+        return this.http.get<ResultModel>(this.baseUrl.concat(`/results`)); 
     }
 }

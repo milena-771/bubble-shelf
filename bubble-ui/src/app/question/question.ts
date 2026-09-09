@@ -22,7 +22,6 @@ export class Question implements OnInit {
   dataQuiz: WritableSignal<QuestionResponse | null> = signal(null);
   progressBar: WritableSignal<ProgressModel | null> = signal(null);
   loading: WritableSignal<boolean> = signal(false);
-  //sessionId: WritableSignal<string | null> = signal(null);
   selectedAnswerId = signal<number | 0>(0);
   currentPercentage: WritableSignal<number> = signal(0);
   progressColorPink: string = 'progress-bar-pink';
@@ -72,7 +71,7 @@ export class Question implements OnInit {
       answerId
     };
     console.log("Submitting answer: ", payload);
-    this.questionService.fetchNextQuestion(this.sessionService.getSessionId()!, payload).subscribe({
+    this.questionService.fetchNextQuestion(payload).subscribe({
       next: (response: QuestionResponse) => {
         this.sessionService.setQuizCompleted(response.progress.completed);
         this.progressBar.set(response.progress);
@@ -95,7 +94,7 @@ export class Question implements OnInit {
   previousQuestion() {
     this.loading.set(true);
     let questionOrder = this.dataQuiz()?.question.order;
-    this.questionService.fetchPreviousQuestion(this.sessionService.getSessionId()!, --questionOrder!).subscribe({
+    this.questionService.fetchPreviousQuestion(--questionOrder!).subscribe({
       next: (response: QuestionResponse) => {
         this.dataQuiz.set(response);
         this.progressBar.set(response.progress);
