@@ -18,6 +18,10 @@ export function initRequestInterceptor(
     req = req.clone({ 
         headers: req.headers.set(sessionHeaderName, sessionId).set(apiKeyName, apiKeyValue)
     });
+   } else {
+    req = req.clone({
+        headers: req.headers.set(apiKeyName, apiKeyValue)
+    });
    }
    return next(req);
 }
