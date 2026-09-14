@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
 import { ProgressModel } from '../models/progress-model';
+import {TranslatePipe } from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-question',
-  imports: [Spinner, ProgressBar],
+  imports: [Spinner, ProgressBar, TranslatePipe],
   templateUrl: './question.html',
   styleUrl: './question.css',
 })
@@ -34,7 +36,8 @@ export class Question implements OnInit {
   ngOnInit() {
     this.header.setConfig({
       showBorderBottom: true,
-      showRestartBtn: false
+      showRestartBtn: false,
+      showLanguageSelector: false
     });
     this.footer.setConfig({
       isResultsPage: false
@@ -110,6 +113,20 @@ export class Question implements OnInit {
   }
 
   restart(){
-    window.location.reload();
+    //window.location.reload();
+    this.sessionService.resetSession();
+    this.questionService.fetchFirstQuestion(1).subscribe({
+      next: (response: QuestionResponse) => {
+        console.log("First question response: ", response);
+        this.dataQuiz.set(response);
+        this.progressBar.set(response.progress);
+        this.sessionService.setSessionId(response.sessionId);
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.log("Error fetching first question: ", error);
+        this.loading.set(false);
+      }
+    });
   }
 }

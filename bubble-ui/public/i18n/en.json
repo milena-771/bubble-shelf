@@ -1,0 +1,45 @@
+{
+  "home": {
+    "title": "What kind of comic reader are you ?",
+    "subtitleOne": "Take our quick test to discover your",
+    "subtitleTwo": "and get personalized comic book recommendations.",
+    "readingProfile": "reading profile",
+    "start": "Start"
+  },
+  "footer": {
+    "personalProject": "Personal project",
+    "termsOfUse": "Terms of use",
+    "copyright": "© 2026 Bubble Shelf"
+  },
+  "header": {
+    "restart": "Restart"
+  },
+  "question":{
+    "title":"Question",
+    "restart":"Restart"
+  },
+  "results":{
+    "title":"Your profile",
+    "subtitle":"Recommandations",
+    "seeMoreBtn":"See more"
+  },
+  "comicDetails":{
+    "author":"Author.s",
+    "publicationYear":"Publication year",
+    "editor":"Editor",
+    "country":"Country",
+    "genre":"Genre",
+    "summary":"Summary"
+  },
+  "termsOfUse": {
+    "home":"Home",
+    "title": "Terms of use",
+    "firstParagraph": "This application is a personal, non-commercial project developed solely for learning and professional development purposes. It does not generate any financial profit or benefit. ",
+    "secondParagraph": "Comic book covers and other visual materials remain the property of their respective copyright holders and are used solely for informational and illustrative purposes."
+  },
+  "timesUp": {
+    "title": "Time's up!",
+    "subtitle": "Please restart the quiz",
+    "restartBtn": "Restart"
+  }
+}

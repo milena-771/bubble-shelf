@@ -10,6 +10,7 @@ export class HeaderService {
     showBubbleLogo: true,
     showRestartBtn: false,
     showBorderBottom: true,
+    showLanguageSelector: true
   });
 
   setConfig(config: Partial<HeaderConfig>) {

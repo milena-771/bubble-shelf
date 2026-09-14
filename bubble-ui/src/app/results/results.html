@@ -6,7 +6,7 @@
             <app-spinner></app-spinner>
         }
 
-        <div class="col-12 result-title">Your profile:</div>
+        <div class="col-12 result-title">{{ 'results.title' | translate }}:</div>
         <div class="col-md-5 chart-container">
             <div style="max-width: 400px">
                 <canvas
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="recommendations-container row">
-        <div class="chewy-recommendation">Recommendations:</div>
+        <div class="chewy-recommendation">{{ 'results.subtitle' | translate }}:</div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-5 g-3 justify-content-center mx-2">
             @if(comicsToShow(); as comics) {
                 @for (comic of comics; track comic.id) {              
@@ -40,7 +40,7 @@
                 @if(results(); as result) {
                     @if(result.recommendedComics.length > 5 && comics.length < result.recommendedComics.length){
                         <div class="mt-4 mb-2 align-items-center d-flex justify-content-center">
-                            <button type="button" class="btn btn-brown btn-sm rounded-pill" (click)="loadMoreComics()"><i class="bi bi-arrow-down"></i> see more</button>
+                            <button type="button" class="btn btn-brown btn-sm rounded-pill" (click)="loadMoreComics()"><i class="bi bi-arrow-down"></i> {{ 'results.seeMoreBtn' | translate }}</button>
                         </div>
                     }
                 }

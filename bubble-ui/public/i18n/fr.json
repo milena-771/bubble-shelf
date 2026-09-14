@@ -1,0 +1,45 @@
+{
+  "home": {
+    "title": "Quel type de lecteur de bandes dessinées êtes-vous ?",
+    "subtitleOne": "Faites notre test rapide pour découvrir votre",
+    "subtitleTwo": "et obtenez des recommandations personnalisées de bandes dessinées.",
+    "readingProfile": "profil de lecture",
+    "start": "Démarrer"
+  },
+  "footer": {
+    "personalProject": "Projet personnel",
+    "termsOfUse": "Conditions d'utilisation",
+    "copyright": "© 2026 Bubble Shelf"
+  },
+  "header": {
+    "restart": "Recommencer"
+  },
+  "question":{
+    "title":"Question",
+    "restart":"Recommencer"
+  },
+  "results":{
+    "title":"Votre profil",
+    "subtitle":"Recommandations",
+    "seeMoreBtn":"Voir plus"
+  },
+  "comicDetails":{
+    "author":"Auteur.s",
+    "publicationYear":"Année de publication",
+    "editor":"Éditeur",
+    "country":"Pays",
+    "genre":"Genre",
+    "summary":"Résumé"
+  },
+  "termsOfUse": {
+    "home":"Accueil",
+    "title": "Conditions d'utilisation",
+    "firstParagraph": "Cette application est un projet personnel et non commercial développé uniquement à des fins d'apprentissage et de développement professionnel. Elle ne génère aucun profit ou avantage financier.",
+    "secondParagraph": "Les couvertures de bandes dessinées et autres supports visuels restent la propriété de leurs détenteurs de droits d'auteur respectifs et sont utilisés uniquement à des fins d'information et d'illustration."
+  },
+  "timesUp": {
+    "title": "Le temps est écoulé !",
+    "subtitle": "Veuillez recommencer le quiz",
+    "restartBtn": "Recommencer"
+  }
+}

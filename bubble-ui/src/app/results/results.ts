@@ -11,11 +11,12 @@ import { ComicModel } from '../models/comic-model';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
 import { Router } from '@angular/router';
+import {TranslatePipe } from "@ngx-translate/core";
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-results',
-  imports: [Spinner, BaseChartDirective, ComicDetails],
+  imports: [Spinner, BaseChartDirective, ComicDetails, TranslatePipe],
   templateUrl: './results.html',
   styleUrl: './results.css',
 })
@@ -58,7 +59,7 @@ export class Results implements OnInit{
   constructor(private resultsService: ResultsService, private sessionService: SessionService, private router: Router) { }
 
   ngOnInit(): void {
-    this.header.setConfig({showBorderBottom: false, showRestartBtn: true});
+    this.header.setConfig({showBorderBottom: false, showRestartBtn: true, showLanguageSelector: false});
     this.footer.setConfig({isResultsPage: true});
     const sessionId = this.sessionService.getSessionId() !== null ? this.sessionService.getSessionId() : null;
     if(!sessionId) {

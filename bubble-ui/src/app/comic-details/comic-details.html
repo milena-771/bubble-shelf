@@ -9,27 +9,27 @@
                             <h5 class="modal-title text-center mt-md-2 mb-4" [style.color]="profileColors[comic.idProfile]">{{ comic.title }}</h5>
                             <div class="comic-infos">
                                 <div class="mb-2">
-                                    <div class="comic-details-field">Author.s</div>        
+                                    <div class="comic-details-field">{{ 'comicDetails.author' | translate }}</div>        
                                     <div>{{ comic.author }}</div>
                                 </div>
                                 <div class="mb-2">
-                                    <div class="comic-details-field">Publication year</div> 
+                                    <div class="comic-details-field">{{ 'comicDetails.publicationYear' | translate }}</div> 
                                     <div>{{ comic.publicationYear }}</div>
                                 </div>
                                 <div class="mb-2">
-                                    <div class="comic-details-field">Editor</div> 
+                                    <div class="comic-details-field">{{ 'comicDetails.editor' | translate }}</div> 
                                     <div>{{ comic.editor}}</div>
                                 </div>
                                 <div class="mb-2">
-                                    <div class="comic-details-field">Country</div> 
+                                    <div class="comic-details-field">{{ 'comicDetails.country' | translate }}</div> 
                                     <div>{{ comic.country }}</div>
                                 </div>
                                 <div class="mb-2">
-                                    <div class="comic-details-field">Genre</div> 
+                                    <div class="comic-details-field">{{ 'comicDetails.genre' | translate }}</div> 
                                     <div>{{ comic.genre }}</div>
                                 </div>
                                 <div class="mb-2">
-                                    <div class="comic-details-field">Summary</div> 
+                                    <div class="comic-details-field">{{ 'comicDetails.summary' | translate }}</div> 
                                     <div>{{ comic.summary }}</div>
                                 </div>
                             </div>

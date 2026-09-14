@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-end m-3">
-    <button type="button" class="btn btn-orange-home btn-restart-question rounded mt-3" (click)="restart()"><i class="bi bi-arrow-clockwise me-2 "></i>Restart</button>
+    <button type="button" class="btn btn-orange-home btn-restart-question rounded mt-3" (click)="restart()"><i class="bi bi-arrow-clockwise me-2 "></i>{{ 'question.restart' | translate }}</button>
 </div>
 
 <main class="question-wrapper">
@@ -11,7 +11,7 @@
 
         @if (dataQuiz(); as quiz) {
             <div class="row mb-2">
-                <div class="col-md-4 chewy-question ">Question {{ quiz.question.order}} :</div> 
+                <div class="col-md-4 chewy-question ">{{ 'question.title' | translate }} {{ quiz.question.order}} :</div> 
                 <div class="col-md-8 text-nowrap label-quesion">{{ quiz.question.label }}</div>
             </div>
             @if (progressBar(); as progress) {

@@ -39,3 +39,31 @@
     transition: background-color 0.2s ease;
     color:white;
 }
+
+.language-dropdown {
+  border: none;
+}
+
+.language-dropdown:active, .language-dropdown:focus {
+  box-shadow: none;
+  border: 1px solid rgb(0, 227, 129);
+}
+
+.dropdown-item:hover {
+    background-color: rgb(0, 227, 129);
+    color: white;
+}
+
+.dropdown{
+    border: none;
+}
+
+.dropdown-menu{
+  min-width: max-content;
+}
+
+.dropdown:focus{
+    border-color: rgb(0,227,129);
+    box-shadow: none;
+}
+
