@@ -2,8 +2,10 @@ package ovh.electricowl.bubble.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,13 +30,21 @@ public class ComicRepository {
 	@Qualifier("bubbleJdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
 
-	public List<Comic> findComicsByProfileIds(Set<Long> ids) throws DAOException {
+	public List<Comic> findComicsByProfileIds(Set<Long> ids, Locale locale) throws DAOException {
 		try {
 			LOG.info("START >>> findComicsByProfileIds");
 			String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
-			String sql = String.format("SELECT * FROM t_comics WHERE c_reading_profile_id IN (%s)",
+			String sql = String.format(
+					"SELECT c_id, c_reading_profile_id, c_author, c_publication_date, c_front_cover, ct_language, ct_title, ct_country, ct_genre, ct_editor, ct_isbn, ct_summary "
+							+ "FROM t_comics c "
+							+ "JOIN t_comics_translations ct ON ct.ct_comic_id = c.c_id "
+							+ "WHERE c_reading_profile_id IN (%s) " + "AND ct.ct_language = ?",
 					inSql);
-			return jdbcTemplate.query(sql, new ComicRowMapper(), ids.toArray());
+
+			List<Object> params = new ArrayList<>(ids);
+			params.add(locale.getLanguage().toString());
+
+			return jdbcTemplate.query(sql, new ComicRowMapper(), params.toArray());
 		} catch (DataAccessException e) {
 			LOG.warn("Error access findComicsByProfileIds: ", e);
 			throw new DAOException(e);
@@ -51,16 +61,17 @@ public class ComicRepository {
 		public Comic mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
 			Comic data = new Comic();
 			data.setId(rs.getLong("c_id"));
-			data.setIsbn(rs.getString("c_isbn"));
-			data.setTitle(rs.getString("c_title"));
+			data.setIsbn(rs.getString("ct_isbn"));
+			data.setTitle(rs.getString("ct_title"));
 			data.setAuthor(rs.getString("c_author"));
-			data.setCountry(rs.getString("c_country"));
+			data.setCountry(rs.getString("ct_country"));
 			data.setPublicationYear(rs.getInt("c_publication_date"));
 			data.setFrontCover(rs.getString("c_front_cover"));
-			data.setGenre(rs.getString("c_genre"));
-			data.setEditor(rs.getString("c_editor"));
-			data.setSummary(rs.getString("c_summary"));
+			data.setGenre(rs.getString("ct_genre"));
+			data.setEditor(rs.getString("ct_editor"));
+			data.setSummary(rs.getString("ct_summary"));
 			data.setIdProfile(rs.getLong("c_reading_profile_id"));
+			data.setLanguage(rs.getString("ct_language"));
 			return data;
 		}
 

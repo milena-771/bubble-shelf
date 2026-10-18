@@ -36,6 +36,7 @@ public class QuestionMapper {
 		progress.setCompleted(false);
 		dto.setQuestion(question);
 		dto.setProgress(progress);
+		dto.setLanguage(entity.getLanguage());
 		return dto;
 	}
 }

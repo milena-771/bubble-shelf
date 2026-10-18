@@ -8,6 +8,8 @@ public class QuestionResponse {
 
 	private Long selectedAnswer;
 
+	private String language;
+
 	private QuestionDTO question;
 
 	private ProgressDTO progress;
@@ -26,6 +28,14 @@ public class QuestionResponse {
 
 	public void setSelectedAnswer(Long selectedAnswer) {
 		this.selectedAnswer = selectedAnswer;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public QuestionDTO getQuestion() {
@@ -47,6 +57,7 @@ public class QuestionResponse {
 	@Override
 	public String toString() {
 		return "QuestionResponse [sessionId=" + sessionId + ", selectedAnswer=" + selectedAnswer
-				+ ", question=" + question + ", progress=" + progress + "]";
+				+ ", language=" + language + ", question=" + question + ", progress=" + progress
+				+ "]";
 	}
 }

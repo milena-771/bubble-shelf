@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.controllers;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ovh.electricowl.bubble.dto.QuestionResponse;
+import ovh.electricowl.bubble.entities.AcceptLangEnum;
 import ovh.electricowl.bubble.services.QuestionService;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.ServiceException;
@@ -33,11 +35,18 @@ public class QuestionController {
 	@GetMapping("{num}")
 	@ResponseStatus(HttpStatus.OK)
 	public QuestionResponse getQuestionByNumber(@PathVariable("num") int order,
-			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId)
-			throws ResourceNotFoundException, ServiceException {
+			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId,
+			Locale locale) throws ResourceNotFoundException, ServiceException {
 		try {
 			LOG.info("START >>> getQuestionByNumber");
-			return questionService.getQuestion(order, sessionId);
+			if ((locale == null)
+					|| ((locale.getLanguage() == null) || locale.getLanguage().isBlank())
+					|| (!locale.getLanguage().toString().equals("en")
+							&& !locale.getLanguage().toString().equals("fr"))) {
+				LOG.warn("locale == null set default to english");
+				locale = Locale.ENGLISH;
+			}
+			return questionService.getQuestion(order, sessionId, locale);
 		} finally {
 			LOG.info("END <<< getQuestionByNumber");
 		}
@@ -46,11 +55,18 @@ public class QuestionController {
 	@GetMapping("/restart")
 	@ResponseStatus(HttpStatus.OK)
 	public QuestionResponse restart(
-			@RequestHeader(value = "X-Test-Session-Id", required = true) UUID sessionId)
+			@RequestHeader(value = "X-Test-Session-Id", required = true) UUID sessionId,
+			Locale locale)
 			throws ServiceException, SessionNotFoundException, ResourceNotFoundException {
 		try {
 			LOG.info("START >>> restart");
-			return questionService.reinitSessionAndGetFirstQuestion(sessionId);
+			if ((locale == null)
+					|| ((locale.getLanguage() == null) || locale.getLanguage().isBlank())
+					|| (!AcceptLangEnum.isValidLanguage(locale.getLanguage().toString()))) {
+				LOG.warn("set default to english");
+				locale = Locale.ENGLISH;
+			}
+			return questionService.reinitSessionAndGetFirstQuestion(sessionId, locale);
 		} finally {
 			LOG.info("END <<< restart");
 		}

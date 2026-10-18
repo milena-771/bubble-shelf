@@ -2,8 +2,10 @@ package ovh.electricowl.bubble.repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,13 +29,20 @@ public class ReadingProfileRepository {
 	@Qualifier("bubbleJdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
 
-	public List<Profile> findAlProfilesByIds(Set<Long> ids) throws DAOException {
+	public List<Profile> findAlProfilesByIds(Set<Long> ids, Locale locale) throws DAOException {
 		try {
 			LOG.info("START >>> findAlProfilesByIds");
 			String inSql = String.join(",", Collections.nCopies(ids.size(), "?"));
-			String sql = String.format("SELECT * FROM t_reading_profiles WHERE rp_id IN (%s)",
+			String sql = String.format(
+					"SELECT rp_id, rp_profile_name, rpt_description, rpt_language FROM t_reading_profiles rp "
+							+ "JOIN t_reading_profiles_translations rpt ON rpt.rpt_reading_profile_id = rp.rp_id "
+							+ "WHERE rp_id IN (%s)" + "AND rpt.rpt_language = ? ",
 					inSql);
-			return jdbcTemplate.query(sql, new ReadingProfileRowMapper(), ids.toArray());
+
+			List<Object> params = new ArrayList<>(ids);
+			params.add(locale.getLanguage().toString());
+
+			return jdbcTemplate.query(sql, new ReadingProfileRowMapper(), params.toArray());
 		} catch (DataAccessException e) {
 			LOG.warn("Error access findAlProfilesByIds: ", e);
 			throw new DAOException(e);
@@ -51,7 +60,8 @@ public class ReadingProfileRepository {
 			Profile data = new Profile();
 			data.setId(rs.getLong("rp_id"));
 			data.setName(rs.getString("rp_profile_name"));
-			data.setDescription(rs.getString("rp_description"));
+			data.setDescription(rs.getString("rpt_description"));
+			data.setLanguage(rs.getString("rpt_language"));
 			return data;
 		}
 

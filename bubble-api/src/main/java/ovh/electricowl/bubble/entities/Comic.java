@@ -24,6 +24,8 @@ public class Comic {
 
 	private Long idProfile;
 
+	private String language;
+
 	public Long getId() {
 		return id;
 	}
@@ -112,11 +114,19 @@ public class Comic {
 		this.idProfile = idProfile;
 	}
 
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	@Override
 	public String toString() {
 		return "Comic [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author
 				+ ", country=" + country + ", publicationYear=" + publicationYear + ", genre="
 				+ genre + ", frontCover=" + frontCover + ", editor=" + editor + ", summary="
-				+ summary + ", idProfile=" + idProfile + "]";
+				+ summary + ", idProfile=" + idProfile + ", language=" + language + "]";
 	}
 }

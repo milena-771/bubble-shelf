@@ -50,7 +50,7 @@ public class AnswerRepository {
 			Answer data = new Answer();
 			data.setId(rs.getLong("a_id"));
 			data.setOrder(rs.getInt("a_order"));
-			data.setLabel(rs.getString("a_label"));
+			// data.setLabel(rs.getString("at_label"));
 			data.setReadingProfileId(rs.getLong("a_reading_profile_id"));
 			return data;
 		}

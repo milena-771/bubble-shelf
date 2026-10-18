@@ -11,6 +11,8 @@ public class Question {
 
 	private String label;
 
+	private String language;
+
 	private List<Answer> answers;
 
 	public Long getId() {
@@ -35,6 +37,14 @@ public class Question {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public List<Answer> getAnswers() {
@@ -68,7 +78,7 @@ public class Question {
 
 	@Override
 	public String toString() {
-		return "Question [id=" + id + ", order=" + order + ", label=" + label + ", answers="
-				+ answers + "]";
+		return "Question [id=" + id + ", order=" + order + ", label=" + label + ", language="
+				+ language + ", answers=" + answers + "]";
 	}
 }

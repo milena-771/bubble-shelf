@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.controllers;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import ovh.electricowl.bubble.dto.QuestionResponse;
 import ovh.electricowl.bubble.dto.SubmitAnswerRequest;
+import ovh.electricowl.bubble.entities.AcceptLangEnum;
 import ovh.electricowl.bubble.services.AnswerService;
 import ovh.electricowl.bubble.services.exceptions.InvalidAnswerException;
 import ovh.electricowl.bubble.services.exceptions.InvalidQuestionException;
@@ -39,13 +41,19 @@ public class AnswerController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
 	public QuestionResponse submitAnswer(@RequestBody @Valid SubmitAnswerRequest request,
-			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId)
-			throws SessionNotFoundException, SessionExpiredException, ResourceNotFoundException,
-			ServiceException, TestAlreadyCompletedException, InvalidQuestionException,
-			InvalidAnswerException {
+			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId,
+			Locale locale) throws SessionNotFoundException, SessionExpiredException,
+			ResourceNotFoundException, ServiceException, TestAlreadyCompletedException,
+			InvalidQuestionException, InvalidAnswerException {
 		try {
 			LOG.info("START >>> submitAnswer");
-			return answerService.submitAnswer(request, sessionId);
+			if ((locale == null)
+					|| ((locale.getLanguage() == null) || locale.getLanguage().isBlank())
+					|| (!AcceptLangEnum.isValidLanguage(locale.getLanguage().toString()))) {
+				LOG.warn("set default to english");
+				locale = Locale.ENGLISH;
+			}
+			return answerService.submitAnswer(request, sessionId, locale);
 		} finally {
 			LOG.info("END <<< submitAnswer");
 		}

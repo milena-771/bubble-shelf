@@ -9,6 +9,8 @@ public class ResultResponse {
 
 	private UUID sessionId;
 
+	private String language;
+
 	private Map<Long, Integer> statistics;
 
 	private Set<ProfileDTO> profileDescription;
@@ -17,6 +19,14 @@ public class ResultResponse {
 
 	public UUID getSessionId() {
 		return sessionId;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public Map<Long, Integer> getStatistics() {
@@ -72,8 +82,8 @@ public class ResultResponse {
 
 	@Override
 	public String toString() {
-		return "ResultResponse [sessionId=" + sessionId + ", statistics=" + statistics
-				+ ", profileDescription=" + profileDescription + ", recommendedComics="
+		return "ResultResponse [sessionId=" + sessionId + ", language=" + language + ", statistics="
+				+ statistics + ", profileDescription=" + profileDescription + ", recommendedComics="
 				+ recommendedComics + "]";
 	}
 

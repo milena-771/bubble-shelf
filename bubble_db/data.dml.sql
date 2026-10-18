@@ -1,203 +1,364 @@
+DELETE FROM t_answers_translations;
 DELETE FROM t_answers;
+DELETE FROM t_comics_translations;
 DELETE FROM t_comics;
+DELETE FROM t_questions_translations;
 DELETE FROM t_questions;
+DELETE FROM t_reading_profiles_translations;
 DELETE FROM t_reading_profiles;
 
-INSERT INTO t_reading_profiles (rp_id, rp_profile_name, rp_description) VALUES
-(
-  1,
-  'THE_DREAMER',
-  'The Dreamer is drawn to emotional, poetic and introspective comic books. This reader enjoys stories that explore inner feelings, personal journeys and quiet moments of reflection. Visual creativity and artistic expression matter as much as the story itself.'
-),
-(
-  2,
-  'THE_ADVENTURER',
-  'The Adventurer seeks action, excitement and epic journeys. This reader loves dynamic plots, heroic characters and immersive worlds filled with quests, battles and discoveries. Fast-paced storytelling and a strong sense of adventure are essential.'
-),
-(
-  3,
-  'THE_DARK_MIND',
-  'The Dark Mind is fascinated by complex, psychological and often unsettling stories. This reader appreciates dark atmospheres, moral ambiguity and narratives that explore the shadows of human nature. Noir, thriller and intense emotional tension are key elements.'
-),
-(
-  4,
-  'THE_LAUGH_SEEKER',
-  'The Laugh Seeker reads comics mainly for fun and relaxation. Humor, lighthearted stories and playful characters are central to this profile. This reader enjoys witty dialogue, visual gags and stories that bring joy and laughter without taking themselves too seriously.'
-),
-(
-  5,
-  'THE_ACTIVIST_READER',
-  'The Activist Reader is passionate about socially engaged comic books. This profile values stories that address political, feminist and societal issues, often highlighting marginalized voices. Reading is both a cultural and political act, meant to inspire awareness and change.'
-),
-(
-  6,
-  'OLD_CLASSIC_READER',
-  'The Old Classic Reader has a deep appreciation for timeless and iconic comic books. This reader enjoys traditional storytelling, clear narratives and historically significant works that shaped the comic book medium. Heritage, cultural legacy and enduring characters are central.'
-);
+
+INSERT INTO t_reading_profiles
+    (rp_id, rp_profile_name)
+VALUES
+(1, 'THE_DREAMER'),
+(2, 'THE_ADVENTURER'),
+(3, 'THE_DARK_MIND'),
+(4, 'THE_LAUGH_SEEKER'),
+(5, 'THE_ACTIVIST_READER'),
+(6, 'OLD_CLASSIC_READER');
+
+INSERT INTO t_reading_profiles_translations
+    (rpt_language, rpt_reading_profile_id, rpt_description)
+VALUES
+('en', 1,
+ 'Drawn to emotional, poetic and introspective comic books. You enjoy stories that explore inner feelings, personal journeys and quiet moments of reflection. Visual creativity and artistic expression matter as much as the story itself.'),
+('en', 2,
+ 'You seek action, excitement and epic journeys. You love dynamic plots, heroic characters and immersive worlds filled with quests, battles and discoveries. Fast-paced storytelling and a strong sense of adventure are essential.'),
+('en', 3,
+ 'You are fascinated by complex, psychological and often unsettling stories. You appreciate dark atmospheres, moral ambiguity and narratives that explore the shadows of human nature. Noir, thriller and intense emotional tension are key elements.'),
+('en', 4,
+ 'You read comics mainly for fun and relaxation. Humor, lighthearted stories and playful characters are central to this profile. You enjoy witty dialogue, visual gags and stories that bring joy and laughter without taking themselves too seriously.'),
+('en', 5,
+ 'Passionate about socially engaged comic books. You value stories that address political, feminist and societal issues, often highlighting marginalized voices. Reading is both a cultural and political act, meant to inspire awareness and change.'),
+('en', 6,
+ 'You have a deep appreciation for timeless and iconic comic books. You appreciate traditional storytelling, clear narratives and historically significant works that shaped the comic book medium. Heritage, cultural legacy and enduring characters are central.'),
+('fr', 1,
+ 'Vous êtes attiré par les bandes dessinées émotionnelles, poétiques et introspectives. Vous appréciez les histoires qui explorent les sentiments intérieurs, les parcours personnels et les instants de réflexion. La créativité visuelle et l’expression artistique comptent autant que le récit lui-même.'),
+('fr', 2,
+ 'Vous êtes à la recherche d’action, d’excitation et des grandes épopées. Vous aimez les intrigues dynamiques, les personnages héroïques et les univers immersifs remplis de quêtes, de batailles et de découvertes. Un rythme soutenu et un véritable esprit d’aventure sont essentiels.'),
+('fr', 3,
+ 'Vous êtes fasciné.e par les histoires complexes, psychologiques et parfois dérangeantes. Vous appréciez les atmosphères obscures, l’ambiguïté morale et les récits qui explorent les zones d’ombre de la nature humaine. Le polar noir, le thriller et une forte tension émotionnelle sont des éléments essentiels.'),
+('fr', 4,
+ 'Vous lisez principalement des bandes dessinées pour se divertir et se détendre. L’humour, les histoires légères et les personnages fantaisistes sont au cœur de ce profil. Vous appréciez les dialogues spirituels, les gags visuels et les récits qui apportent joie et bonne humeur sans se prendre trop au sérieux.'),
+('fr', 5,
+ 'Engagé et passionné par les bandes dessinées qui portent un regard critique sur la société. Vous privilégiez les histoires abordant les questions politiques, féministes et sociales, souvent en donnant une voix aux personnes marginalisées. La lecture est à la fois un acte culturel et politique, destiné à éveiller les consciences et à encourager le changement.'),
+('fr', 6,
+ 'Vous possèdez une profonde admiration pour les bandes dessinées intemporelles et emblématiques. Vous aimez les récits traditionnels, les intrigues claires et les œuvres historiquement importantes qui ont façonné le neuvième art. Le patrimoine, l’héritage culturel et les personnages qui traversent les générations occupent une place centrale.');
 
 
-INSERT INTO t_questions (q_id, q_order, q_label) VALUES
-(1, 1, 'What kind of story do you enjoy the most?'),
-(2, 2, 'What do you look for first in a comic book?'),
-(3, 3, 'Which atmosphere appeals to you the most?'),
-(4, 4, 'What kind of characters do you prefer?'),
-(5, 5, 'What format do you usually prefer?'),
-(6, 6, 'How important is the visual style to you?'),
-(7, 7, 'How do you feel about social and political themes?'),
-(8, 8, 'What reading pace do you enjoy the most?'),
-(9, 9, 'What level of realism do you prefer?'),
-(10, 10, 'What emotion do you want to feel after reading?'),
-(11, 11, 'What kind of comics do you naturally gravitate toward?'),
-(12, 12, 'How do you relate to classic comic characters?'),
-(13, 13, 'What storytelling style do you value the most?');
+INSERT INTO t_questions
+    (q_id, q_order)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10),
+(11, 11),
+(12, 12),
+(13, 13);
 
-INSERT INTO t_answers (a_order, a_label, a_question_id, a_reading_profile_id) VALUES
-
--- Q1
-(1, 'Emotional and poetic stories', 1, 1),
-(2, 'Action-filled adventures', 1, 2),
-(3, 'Dark and psychological narratives', 1, 3),
-(4, 'Light and humorous stories', 1, 4),
-
--- Q2
-(5, 'Artistic expression and emotions', 2, 1),
-(6, 'World-building and adventure', 2, 2),
-(7, 'Tension and moral complexity', 2, 3),
-(8, 'Strong social or political messages', 2, 5),
-
--- Q3
-(9, 'Dreamy and contemplative', 3, 1),
-(10, 'Epic and immersive', 3, 2),
-(11, 'Dark and unsettling', 3, 3),
-(12, 'Bright and playful', 3, 4),
-
--- Q4
-(13, 'Sensitive and introspective characters', 4, 1),
-(14, 'Brave heroes and explorers', 4, 2),
-(15, 'Flawed and ambiguous characters', 4, 3),
-(16, 'Engaged and socially aware characters', 4, 5),
-
--- Q5
-(17, 'Short stories or one-shots', 5, 1),
-(18, 'Long-running series', 5, 2),
-(19, 'Standalone intense stories', 5, 3),
-(20, 'Any format as long as it is fun', 5, 4),
-
--- Q6
-(21, 'Essential, visuals carry the emotion', 6, 1),
-(22, 'Important if it enhances action', 6, 2),
-(23, 'Crucial for mood and tension', 6, 3),
-(24, 'Important when it supports the message', 6, 5),
-
--- Q7
-(25, 'I actively seek engaged and feminist themes', 7, 5),
-(26, 'I appreciate them when they are subtle', 7, 1),
-(27, 'Only if they add depth or darkness', 7, 3),
-(28, 'I prefer to avoid them and just have fun', 7, 4),
-
--- Q8
-(29, 'Slow and reflective', 8, 1),
-(30, 'Fast-paced and dynamic', 8, 2),
-(31, 'Slow but intense', 8, 3),
-(32, 'Fast and entertaining', 8, 4),
-
--- Q9
-(33, 'Realistic and socially grounded stories', 9, 5),
-(34, 'Emotionally realistic, even if symbolic', 9, 1),
-(35, 'Escapism matters more than realism', 9, 2),
-(36, 'Raw and harsh realism', 9, 3),
-
--- Q10
-(37, 'Moved and thoughtful', 10, 1),
-(38, 'Energized and excited', 10, 2),
-(39, 'Challenged or disturbed', 10, 3),
-(40, 'Empowered or inspired to act', 10, 5),
-
--- Q11
-(41, 'Timeless and iconic comic books', 11, 6),
-(42, 'Creative and experimental works', 11, 1),
-(43, 'Dark and mature comics', 11, 3),
-(44, 'Entertaining and humorous comics', 11, 4),
-
--- Q12
-(45, 'They are cultural landmarks and references', 12, 6),
-(46, 'I enjoy them, especially adventure classics', 12, 2),
-(47, 'I like when they are reinterpreted or subverted', 12, 3),
-(48, 'I prefer contemporary and engaged characters', 12, 5),
-
--- Q13
-(49, 'Clear and traditional storytelling', 13, 6),
-(50, 'Epic and adventurous storytelling', 13, 2),
-(51, 'Complex and psychological narratives', 13, 3),
-(52, 'Stories that question society and norms', 13, 5);
+INSERT INTO t_questions_translations
+    (qt_language, qt_question_id, qt_label)
+VALUES
+('en', 1,  'What kind of story do you enjoy the most ?'),
+('en', 2,  'What do you look for first in a comic book ?'),
+('en', 3,  'Which atmosphere appeals to you the most ?'),
+('en', 4,  'What kind of characters do you prefer ?'),
+('en', 5,  'What format do you usually prefer ?'),
+('en', 6,  'How important is the visual style to you ?'),
+('en', 7,  'How do you feel about social and political themes ?'),
+('en', 8,  'What reading pace do you enjoy the most ?'),
+('en', 9,  'What level of realism do you prefer ?'),
+('en', 10, 'What emotion do you want to feel after reading ?'),
+('en', 11, 'What kind of comics do you naturally gravitate toward ?'),
+('en', 12, 'How do you relate to classic comic characters ?'),
+('en', 13, 'What storytelling style do you value the most ?'),
+('fr', 1,  'Quel type d’histoire préférez-vous ?'),
+('fr', 2,  'Que recherchez-vous en premier dans une bande dessinée ?'),
+('fr', 3,  'Quelle atmosphère vous attire le plus ?'),
+('fr', 4,  'Quel type de personnages préférez-vous ?'),
+('fr', 5,  'Quel format préférez-vous habituellement ?'),
+('fr', 6,  'Quelle importance accordez-vous au style graphique ?'),
+('fr', 7,  'Que pensez-vous des thèmes sociaux et politiques ?'),
+('fr', 8,  'Quel rythme de lecture préférez-vous ?'),
+('fr', 9,  'Quel degré de réalisme préférez-vous ?'),
+('fr', 10, 'Quelle émotion souhaitez-vous ressentir après votre lecture ?'),
+('fr', 11, 'Vers quel type de bandes dessinées vous tournez-vous naturellement ?'),
+('fr', 12, 'Quel rapport entretenez-vous avec les personnages classiques de la BD ?'),
+('fr', 13, 'Quel style narratif privilégiez-vous ?');
 
 
-INSERT INTO t_comics (
-  c_id,
-  c_isbn,
-  c_title,
-  c_author,
-  c_country,
-  c_publication_date,
-  c_genre,
-  c_front_cover,
-  c_editor,
-  c_reading_profile_id,
-  c_summary
-) VALUES
+INSERT INTO t_answers
+    (a_id, a_order, a_question_id, a_reading_profile_id)
+VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 2),
+(3, 3, 1, 3),
+(4, 4, 1, 4),
+(5, 5, 2, 1),
+(6, 6, 2, 2),
+(7, 7, 2, 3),
+(8, 8, 2, 5),
+(9, 9, 3, 1),
+(10, 10, 3, 2),
+(11, 11, 3, 3),
+(12, 12, 3, 4),
+(13, 13, 4, 1),
+(14, 14, 4, 2),
+(15, 15, 4, 3),
+(16, 16, 4, 5),
+(17, 17, 5, 1),
+(18, 18, 5, 2),
+(19, 19, 5, 3),
+(20, 20, 5, 4),
+(21, 21, 6, 1),
+(22, 22, 6, 2),
+(23, 23, 6, 3),
+(24, 24, 6, 5),
+(25, 25, 7, 5),
+(26, 26, 7, 1),
+(27, 27, 7, 3),
+(28, 28, 7, 4),
+(29, 29, 8, 1),
+(30, 30, 8, 2),
+(31, 31, 8, 3),
+(32, 32, 8, 4),
+(33, 33, 9, 5),
+(34, 34, 9, 1),
+(35, 35, 9, 2),
+(36, 36, 9, 3),
+(37, 37, 10, 1),
+(38, 38, 10, 2),
+(39, 39, 10, 3),
+(40, 40, 10, 5),
+(41, 41, 11, 6),
+(42, 42, 11, 1),
+(43, 43, 11, 3),
+(44, 44, 11, 4),
+(45, 45, 12, 6),
+(46, 46, 12, 2),
+(47, 47, 12, 3),
+(48, 48, 12, 5),
+(49, 49, 13, 6),
+(50, 50, 13, 2),
+(51, 51, 13, 3),
+(52, 52, 13, 5);
 
--- =========================
--- THE_DREAMER (1)
--- =========================
-(DEFAULT, 'ISBN-D-001', 'Daytripper', 'Fábio Moon & Gabriel Bá', 'Brazil', 2010, 'Drama', 'daytripper.jpg', 'Vertigo', 1, 'A poetic exploration of life, love, and the many possible paths of a man named Brás.'),
-(DEFAULT, 'ISBN-D-002', 'Blankets', 'Craig Thompson', 'USA', 2003, 'Autobiography', 'blankets.jpg', 'Top Shelf', 1, 'A heartfelt coming-of-age story exploring family, first love, and faith.'),
-(DEFAULT, 'ISBN-D-003', 'The Arrival', 'Shaun Tan', 'Australia', 2006, 'Poetic', 'arrival.jpg', 'Arthur A. Levine', 1, 'A wordless journey of an immigrant discovering a strange and wondrous new world.'),
-(DEFAULT, 'ISBN-D-004', 'Asterios Polyp', 'David Mazzucchelli', 'USA', 2009, 'Introspection', 'asterios.jpg', 'Pantheon', 1, 'A visually inventive story about an architect confronting his life, relationships, and identity.'),
-(DEFAULT, 'ISBN-D-005', 'Blue Is the Warmest Color', 'Julie Maroh', 'France', 2010, 'Romance', 'blue.jpg', 'Glénat', 1, 'A tender and emotional story of first love and self-discovery between two young women.'),
 
--- =========================
--- THE_ADVENTURER (2)
--- =========================
-(DEFAULT, 'ISBN-A-001', 'Thorgal', 'Jean Van Hamme', 'Belgium', 1977, 'Adventure', 'thorgal.jpg', 'Le Lombard', 2, 'Epic adventures of a Viking hero navigating dangerous lands and mythical threats.'),
-(DEFAULT, 'ISBN-A-002', 'Lanfeust of Troy', 'Christophe Arleston', 'France', 1994, 'Fantasy', 'lanfeust.jpg', 'Soleil', 2, 'A young hero discovers magical powers and embarks on quests in a fantastical world.'),
-(DEFAULT, 'ISBN-A-003', 'One Piece', 'Eiichiro Oda', 'Japan', 1997, 'Adventure', 'onepiece.jpg', 'Shueisha', 2, 'A young pirate sets sail with his crew to find the legendary treasure, the One Piece.'),
-(DEFAULT, 'ISBN-A-004', 'Saga', 'Brian K. Vaughan', 'USA', 2012, 'Sci-Fi', 'saga.jpg', 'Image Comics', 2, 'A star-crossed couple from warring races struggle to protect their child in a vast universe.'),
-(DEFAULT, 'ISBN-A-005', 'Bone', 'Jeff Smith', 'USA', 1991, 'Fantasy', 'bone.jpeg', 'Cartoon Books', 2, 'Three cousins get lost in a mysterious valley filled with wonderful and dangerous creatures.'),
+INSERT INTO t_answers_translations
+    (at_answer_id, at_language,  at_label)
+VALUES
+(1, 'en', 'Emotional and poetic stories'),
+(2, 'en', 'Action-filled adventures'),
+(3,'en', 'Dark and psychological narratives'),
+(4, 'en', 'Light and humorous stories'),
+(5, 'en', 'Artistic expression and emotions'),
+(6, 'en', 'World-building and adventure'),
+(7, 'en', 'Tension and moral complexity'),
+(8, 'en', 'Strong social or political messages'),
+(9, 'en', 'Dreamy and contemplative'),
+(10, 'en', 'Epic and immersive'),
+(11, 'en', 'Dark and unsettling'),
+(12, 'en', 'Bright and playful'),
+(13,  'en', 'Sensitive and introspective characters'),
+(14,  'en', 'Brave heroes and explorers'),
+(15,  'en', 'Flawed and ambiguous characters'),
+(16,  'en', 'Engaged and socially aware characters'),
+(17,  'en', 'Short stories or one-shots'),
+(18,  'en', 'Long-running series'),
+(19,  'en', 'Standalone intense stories'),
+(20,  'en', 'Any format as long as it is fun'),
+(21,  'en', 'Essential, visuals carry the emotion'),
+(22,  'en', 'Important if it enhances action'),
+(23,  'en', 'Crucial for mood and tension'),
+(24,  'en', 'Important when it supports the message'),
+(25,  'en', 'I actively seek engaged and feminist themes'),
+(26,  'en', 'I appreciate them when they are subtle'),
+(27,  'en', 'Only if they add depth or darkness'),
+(28,  'en', 'I prefer to avoid them and just have fun'),
+(29,  'en', 'Slow and reflective'),
+(30,  'en', 'Fast-paced and dynamic'),
+(31,  'en', 'Slow but intense'),
+(32,  'en', 'Fast and entertaining'),
+(33,  'en', 'Realistic and socially grounded stories'),
+(34,  'en', 'Emotionally realistic, even if symbolic'),
+(35,  'en', 'Escapism matters more than realism'),
+(36,  'en', 'Raw and harsh realism'),
+(37,  'en', 'Moved and thoughtful'),
+(38,  'en', 'Energized and excited'),
+(39,  'en', 'Challenged or disturbed'),
+(40,  'en', 'Empowered or inspired to act'),
+(41,  'en', 'Timeless and iconic comic books'),
+(42,  'en', 'Creative and experimental works'),
+(43,  'en', 'Dark and mature comics'),
+(44,  'en', 'Entertaining and humorous comics'),
+(45,  'en', 'They are cultural landmarks and references'),
+(46,  'en', 'I enjoy them, especially adventure classics'),
+(47,  'en', 'I like when they are reinterpreted or subverted'),
+(48,  'en', 'I prefer contemporary and engaged characters'),
+(49,  'en', 'Clear and traditional storytelling'),
+(50,  'en', 'Epic and adventurous storytelling'),
+(51,  'en', 'Complex and psychological narratives'),
+(52,  'en', 'Stories that question society and norms'),
+(1, 'fr', 'Des histoires émotionnelles et poétiques'),
+(2, 'fr',  'Des aventures pleines d’action'),
+(3, 'fr',  'Des récits sombres et psychologiques'),
+(4, 'fr',  'Des histoires légères et humoristiques'),
+(5, 'fr',  'L’expression artistique et les émotions'),
+(6, 'fr',  'La construction d’univers et l’aventure'),
+(7, 'fr',  'La tension et la complexité morale'),
+(8, 'fr',  'Des messages sociaux ou politiques forts'),
+(9, 'fr',  'Une atmosphère onirique et contemplative'),
+(10, 'fr',  'Une atmosphère épique et immersive'),
+(11, 'fr',  'Une atmosphère sombre et troublante'),
+(12, 'fr',  'Une atmosphère joyeuse et pleine de fantaisie'),
+(13, 'fr',  'Des personnages sensibles et introspectifs'),
+(14, 'fr', 'Des héros courageux et des explorateurs'),
+(15, 'fr',  'Des personnages imparfaits et ambigus'),
+(16, 'fr',  'Des personnages engagés et conscients des enjeux sociaux'),
+(17, 'fr',  'Des histoires courtes ou des récits indépendants'),
+(18, 'fr',  'Des séries au long cours'),
+(19, 'fr',  'Des histoires indépendantes et intenses'),
+(20, 'fr',  'N’importe quel format, du moment qu’il est divertissant'),
+(21, 'fr',  'Essentiel : le dessin transmet les émotions'),
+(22, 'fr',  'Important s’il renforce l’action'),
+(23, 'fr',  'Crucial pour créer une ambiance et de la tension'),
+(24, 'fr',  'Important lorsqu’il sert le message'),
+(25, 'fr',  'Je recherche activement des thèmes engagés et féministes'),
+(26, 'fr',  'Je les apprécie lorsqu’ils sont abordés avec subtilité'),
+(27, 'fr',  'Seulement s’ils apportent de la profondeur ou une dimension sombre'),
+(28, 'fr',  'Je préfère les éviter pour simplement me divertir'),
+(29, 'fr', 'Lent et propice à la réflexion'),
+(30, 'fr',  'Rapide et dynamique'),
+(31, 'fr', 'Lent mais intense'),
+(32, 'fr', 'Rapide et divertissant'),
+(33, 'fr', 'Des histoires réalistes et ancrées dans la société'),
+(34, 'fr', 'Un réalisme émotionnel, même si le récit est symbolique'),
+(35, 'fr', 'L’évasion compte davantage que le réalisme'),
+(36, 'fr', 'Un réalisme brut et sans concession'),
+(37, 'fr', 'Être ému et amené à réfléchir'),
+(38, 'fr', 'Me sentir plein d’énergie et d’enthousiasme'),
+(39, 'fr', 'Me sentir bousculé ou troublé'),
+(40, 'fr', 'Me sentir capable d’agir ou inspiré à le faire'),
+(41, 'fr', 'Des bandes dessinées intemporelles et emblématiques'),
+(42, 'fr',  'Des œuvres créatives et expérimentales'),
+(43, 'fr',  'Des bandes dessinées sombres et matures'),
+(44, 'fr', 'Des bandes dessinées divertissantes et humoristiques'),
+(45, 'fr', 'Ils représentent des repères et des références culturelles'),
+(46, 'fr', 'Je les apprécie, notamment dans les classiques d’aventure'),
+(47, 'fr', 'J’aime lorsqu’ils sont réinterprétés ou détournés'),
+(48, 'fr', 'Je préfère les personnages contemporains et engagés'),
+(49, 'fr', 'Une narration claire et traditionnelle'),
+(50, 'fr', 'Une narration épique et aventureuse'),
+(51, 'fr', 'Des récits complexes et psychologiques'),
+(52, 'fr', 'Des histoires qui remettent en question la société et ses normes');
 
--- =========================
--- THE_DARK_MIND (3)
--- =========================
-(DEFAULT, 'ISBN-DM-001', 'Blacksad', 'Juan Díaz Canales & Juanjo Guarnido', 'Spain', 2000, 'Noir', 'blacksad.jpg', 'Dargaud', 3, 'A detective cat navigates crime, corruption, and human vice in a noir-inspired world.'),
-(DEFAULT, 'ISBN-DM-002', 'Watchmen', 'Alan Moore & Dave Gibbons', 'UK', 1987, 'Psychological', 'watchmen.jpg', 'DC Comics', 3, 'Superheroes face moral dilemmas and societal collapse in a dark alternate history.'),
-(DEFAULT, 'ISBN-DM-003', 'Sin City', 'Frank Miller', 'USA', 1991, 'Noir', 'sincity.jpg', 'Dark Horse', 3, 'Intertwined stories of crime, revenge, and survival in a gritty, violent city.'),
-(DEFAULT, 'ISBN-DM-004', 'From Hell', 'Alan Moore & Eddie Campbell', 'UK', 1999, 'Crime', 'fromhell.jpg', 'Top Shelf', 3, 'A detailed exploration of Jack the Ripper’s crimes and the society surrounding him.'),
-(DEFAULT, 'ISBN-DM-005', 'V for Vendetta', 'Alan Moore & David Lloyd', 'UK', 1988, 'Political', 'vforvendetta.jpg', 'DC Comics', 3, 'A masked revolutionary fights a dystopian government to inspire freedom and justice.'),
+INSERT INTO t_comics (c_id, c_author, c_publication_date, c_front_cover, c_reading_profile_id)
+VALUES
+    (1, 'Fábio Moon & Gabriel Bá', 2010, 'daytripper.jpg', 1),
+    (2, 'Craig Thompson', 2003, 'blankets.jpg', 1),
+    (3, 'Shaun Tan', 2006, 'arrival.jpg', 1),
+    (4, 'David Mazzucchelli', 2009, 'asterios.jpg', 1),
+    (5, 'Julie Maroh', 2010, 'blue.jpg', 1),
+    (6, 'Jean Van Hamme', 1977, 'thorgal.jpg', 2),
+    (7, 'Christophe Arleston', 1994, 'lanfeust.jpg', 2),
+    (8, 'Eiichiro Oda', 1997, 'onepiece.jpg', 2),
+    (9, 'Brian K. Vaughan', 2012, 'saga.jpg', 2),
+    (10, 'Jeff Smith', 1991, 'bone.jpeg', 2),
+    (11, 'Juan Díaz Canales & Juanjo Guarnido', 2000, 'blacksad.jpg', 3),
+    (12, 'Alan Moore & Dave Gibbons', 1987, 'watchmen.jpg', 3),
+    (13, 'Frank Miller', 1991, 'sincity.jpg', 3),
+    (14, 'Alan Moore & Eddie Campbell', 1999, 'fromhell.jpg', 3),
+    (15, 'Alan Moore & David Lloyd', 1988, 'vforvendetta.jpg', 3),
+    (16, 'André Franquin', 1957, 'gaston.jpg', 4),
+    (17, 'René Goscinny & Albert Uderzo', 1959, 'asterix.jpg', 4),
+    (18, 'Bill Watterson', 1985, 'calvin.jpg', 4),
+    (19, 'Midam', 1993, 'kidpaddle.jpg', 4),
+    (20, 'Matt Groening', 1993, 'simpsons.jpg', 4),
+    (21, 'Marjane Satrapi', 2000, 'persepolis.jpg', 5),
+    (22, 'Pénélope Bagieu', 2016, 'culottees.jpg', 5),
+    (23, 'Alison Bechdel', 2006, 'fun_home.jpg', 5),
+    (24, 'Marguerite Abouet', 2005, 'aya.jpg', 5),
+    (25, 'Jean-Marc Jancovici & Christophe Blain', 2021, 'world_without_end.jpg', 5),
+    (26, 'Inès Leraud & Pierre Van Hove', 2021, 'algues_vertes.jpg', 5),
+    (27, 'Guy Delisle', 2003, 'pyongyang.jpg', 5),
+    (28, 'Hergé', 1960, 'tintin.jpg', 6),
+    (29, 'André Franquin', 1958, 'spirou.jpg', 6),
+    (30, 'Morris & René Goscinny', 1955, 'luckyluke.jpg', 6),
+    (31, 'Alex Raymond', 1934, 'flashgordon.jpg', 6),
+    (32, 'Lee Falk', 1936, 'phantom.jpg', 6);
 
--- =========================
--- THE_LAUGH_SEEKER (4)
--- =========================
-(DEFAULT, 'ISBN-L-001', 'Gaston Lagaffe', 'André Franquin', 'Belgium', 1957, 'Humor', 'gaston.jpg', 'Dupuis', 4, 'Comical adventures of an accident-prone office worker and his hilarious inventions.'),
-(DEFAULT, 'ISBN-L-002', 'Asterix', 'René Goscinny & Albert Uderzo', 'France', 1959, 'Humor', 'asterix.jpg', 'Hachette', 4, 'The adventures of a clever Gaul and his friends resisting Roman occupation with wit and humor.'),
-(DEFAULT, 'ISBN-L-003', 'Calvin and Hobbes', 'Bill Watterson', 'USA', 1985, 'Humor', 'calvin.jpg', 'Andrews McMeel', 4, 'A young boy and his tiger friend explore imagination, mischief, and life’s lessons.'),
-(DEFAULT, 'ISBN-L-004', 'Kid Paddle', 'Midam', 'Belgium', 1993, 'Humor', 'kidpaddle.jpg', 'Dupuis', 4, 'Funny stories of a boy passionate about video games and his comical adventures.'),
-(DEFAULT, 'ISBN-L-005', 'The Simpsons Comics', 'Matt Groening', 'USA', 1993, 'Humor', 'simpsons.jpg', 'Bongo Comics', 4, 'The Simpsons family gets into humorous situations reflecting modern life and society.'),
-
--- =========================
--- THE_ACTIVIST_READER (5)
--- =========================
-(DEFAULT, 'ISBN-AR-001', 'Persepolis', 'Marjane Satrapi', 'France', 2000, 'Biography', 'persepolis.jpg', 'L’Association', 5, 'A young girl’s life during the Iranian revolution, exploring identity and resilience.'),
-(DEFAULT, 'ISBN-AR-002', 'Culottées', 'Pénélope Bagieu', 'France', 2016, 'Feminism', 'culottees.jpg', 'Gallimard', 5, 'Stories of remarkable women who defied conventions and shaped history.'),
-(DEFAULT, 'ISBN-AR-003', 'Fun Home', 'Alison Bechdel', 'USA', 2006, 'Biography / Identity', 'fun_home.jpg', 'Houghton Mifflin', 5, 'Memoir exploring family, sexuality, and self-discovery.'),
-(DEFAULT, 'ISBN-AR-004', 'Aya of Yop City', 'Marguerite Abouet', 'Ivory Coast', 2005, 'Social', 'aya.jpg', 'Gallimard', 5, 'A lively story of a young woman navigating life, love, and friendship in Ivory Coast.'),
-(DEFAULT, 'ISBN-AR-005', 'The World Without End', 'Jean-Marc Jancovici & Christophe Blain', 'France', 2021, 'Ecology', 'world_without_end.jpg', 'Dargaud', 5, 'A graphic novel by that explores the complex relationship between humanity, energy, and the environment. Through an accessible dialogue between a cartoonist and an energy expert, the book explains how modern societies have been built on abundant fossil energy and examines the consequences of our dependence on these resources.'),
-(DEFAULT, 'ISBN-AR-006', 'Algues Vertes', 'Inès Leraud & Pierre Van Hove', 'France', 2021, 'Ecology / Investigative', 'algues_vertes.jpg', 'Les Arènes', 5, 'Investigative report on the environmental disaster of green algae pollution in Brittany.'),
-(DEFAULT, 'ISBN-AR-007', 'Pyongyang: A Journey in North Korea', 'Guy Delisle', 'Canada', 2003, 'Political Documentary', 'pyongyang.jpg', 'L’Association', 5, 'A humorous and insightful account of life in North Korea through a cartoonist’s perspective.'),
-
--- =========================
--- OLD_CLASSIC_READER (6)
--- =========================
-(DEFAULT, 'ISBN-C-001', 'Tintin in Tibet', 'Hergé', 'Belgium', 1960, 'Adventure', 'tintin.jpg', 'Casterman', 6, 'Tintin travels to Tibet to rescue his friend Chang in a thrilling adventure.'),
-(DEFAULT, 'ISBN-C-002', 'Spirou and Fantasio', 'André Franquin', 'Belgium', 1958, 'Adventure', 'spirou.jpg', 'Dupuis', 6, 'Two friends embark on exciting adventures filled with humor and creativity.'),
-(DEFAULT, 'ISBN-C-003', 'Lucky Luke', 'Morris & René Goscinny', 'Belgium', 1955, 'Western', 'luckyluke.jpg', 'Dupuis', 6, 'A quick-drawing cowboy confronts outlaws in humorous and classic Western tales.'),
-(DEFAULT, 'ISBN-C-004', 'Flash Gordon', 'Alex Raymond', 'USA', 1934, 'Sci-Fi', 'flashgordon.jpg', 'King Features', 6, 'A hero battles evil in space, defending humanity from cosmic threats.'),
-(DEFAULT, 'ISBN-C-005', 'The Phantom', 'Lee Falk', 'USA', 1936, 'Adventure', 'phantom.jpg', 'King Features', 6, 'The masked crime-fighter protects his jungle homeland from criminals and injustice.');
+INSERT INTO t_comics_translations
+    (ct_language, ct_comic_id, ct_title, ct_country, ct_genre, ct_editor, ct_isbn, ct_summary)
+VALUES
+    ('en', 1, 'Daytripper', 'Brazil', 'Drama', 'Vertigo', 'ISBN-D-001', 'A poetic exploration of life, love, and the many possible paths of a man named Brás.'),
+    ('fr', 1, 'Daytripper', 'Brésil', 'Drame', 'Urban Comics', 'ISBN-D-001-FR', 'Une exploration poétique de la vie, de l’amour et des multiples chemins que peut emprunter un homme nommé Brás.'),
+    ('en', 2, 'Blankets', 'USA', 'Autobiography', 'Top Shelf Productions', 'ISBN-D-002', 'A heartfelt coming-of-age story exploring family, first love, and faith.'),
+    ('fr', 2, 'Blankets', 'Etats-Unis', 'Autobiographie', 'Casterman', 'ISBN-D-002-FR', 'Un récit initiatique émouvant qui explore la famille, le premier amour et la foi.'),
+    ('en', 3, 'The Arrival', 'Australia', 'Poetic', 'Arthur A. Levine Books', 'ISBN-D-003', 'A wordless journey of an immigrant discovering a strange and wondrous new world.'),
+    ('fr', 3, 'Là où vont nos pères', 'Australie', 'Poétique', 'Dargaud', 'ISBN-D-003-FR', 'Un récit sans paroles sur un immigrant qui découvre un monde nouveau, étrange et merveilleux.'),
+    ('en', 4, 'Asterios Polyp', 'USA', 'Introspection', 'Pantheon Books', 'ISBN-D-004', 'A visually inventive story about an architect confronting his life, relationships, and identity.'),
+    ('fr', 4, 'Asterios Polyp', 'Etats-Unis', 'Introspection', 'Casterman', 'ISBN-D-004-FR', 'Un récit graphiquement inventif sur un architecte confronté à sa vie, à ses relations et à son identité.'),
+    ('en', 5, 'Blue Is the Warmest Color', 'France', 'Romance', 'Arsenal Pulp Press', 'ISBN-D-005', 'A tender and emotional story of first love and self-discovery between two young women.'),
+    ('fr', 5, 'Le bleu est une couleur chaude', 'France', 'Romance', 'Glénat', 'ISBN-D-005-FR', 'Une histoire tendre et émouvante de premier amour et de découverte de soi entre deux jeunes femmes.'),
+    ('en', 6, 'Thorgal', 'Belgium', 'Adventure', 'Cinebook', 'ISBN-A-001', 'Epic adventures of a Viking hero navigating dangerous lands and mythical threats.'),
+    ('fr', 6, 'Thorgal', 'Belgique', 'Aventure', 'Le Lombard', 'ISBN-A-001-FR', 'Les aventures épiques d’un héros viking qui traverse des terres dangereuses et affronte des menaces mythiques.'),
+    ('en', 7, 'Lanfeust of Troy', 'France', 'Fantasy', 'Nantier Beall Minoustchine Publishing', 'ISBN-A-002', 'A young hero discovers magical powers and embarks on quests in a fantastical world.'),
+    ('fr', 7, 'Lanfeust de Troy', 'France', 'Fantasy', 'Soleil', 'ISBN-A-002-FR', 'Un jeune héros découvre des pouvoirs magiques et part à l’aventure dans un univers fantastique.'),
+    ('en', 8, 'One Piece', 'Japan', 'Adventure', 'VIZ Media', 'ISBN-A-003', 'A young pirate sets sail with his crew to find the legendary treasure, the One Piece.'),
+    ('fr', 8, 'One Piece', 'Japon', 'Aventure', 'Glénat', 'ISBN-A-003-FR', 'Un jeune pirate prend la mer avec son équipage pour trouver le légendaire trésor appelé le One Piece.'),
+    ('en', 9, 'Saga', 'USA', 'Sci-Fi', 'Image Comics', 'ISBN-A-004', 'A star-crossed couple from warring races struggle to protect their child in a vast universe.'),
+    ('fr', 9, 'Saga', 'Etats-Unis', 'Science-fiction', 'Urban Comics', 'ISBN-A-004-FR', 'Un couple issu de peuples ennemis lutte pour protéger son enfant dans un vaste univers.'),
+    ('en', 10, 'Bone', 'USA', 'Fantasy', 'Cartoon Books', 'ISBN-A-005', 'Three cousins get lost in a mysterious valley filled with wonderful and dangerous creatures.'),
+    ('fr', 10, 'Bone', 'Etats-Unis', 'Fantasy', 'Delcourt', 'ISBN-A-005-FR', 'Trois cousins se perdent dans une vallée mystérieuse peuplée de créatures merveilleuses et dangereuses.'),
+    ('en', 11, 'Blacksad', 'Spain', 'Noir', 'Dark Horse Comics', 'ISBN-DM-001', 'A detective cat navigates crime, corruption, and human vice in a noir-inspired world.'),
+    ('fr', 11, 'Blacksad', 'Espagne', 'Polar noir', 'Dargaud', 'ISBN-DM-001-FR', 'Un chat détective enquête sur le crime, la corruption et les vices humains dans un univers de polar noir.'),
+    ('en', 12, 'Watchmen', 'UK', 'Psychological', 'DC Comics', 'ISBN-DM-002', 'Superheroes face moral dilemmas and societal collapse in a dark alternate history.'),
+    ('fr', 12, 'Watchmen', 'Royaume-Uni', 'Psychologique', 'Urban Comics', 'ISBN-DM-002-FR', 'Des super-héros affrontent des dilemmes moraux et l’effondrement de la société dans une sombre uchronie.'),
+    ('en', 13, 'Sin City', 'USA', 'Noir', 'Dark Horse Comics', 'ISBN-DM-003', 'Intertwined stories of crime, revenge, and survival in a gritty, violent city.'),
+    ('fr', 13, 'Sin City', 'Etats-Unis', 'Polar noir', 'Rackham', 'ISBN-DM-003-FR', 'Des histoires entremêlées de crime, de vengeance et de survie dans une ville brutale et violente.'),
+    ('en', 14, 'From Hell', 'UK', 'Crime', 'Top Shelf Productions', 'ISBN-DM-004', 'A detailed exploration of Jack the Ripper’s crimes and the society surrounding him.'),
+    ('fr', 14, 'From Hell', 'Royaume-Uni', 'Crime', 'Delcourt', 'ISBN-DM-004-FR', 'Une exploration détaillée des crimes de Jack l’Éventreur et de la société de son époque.'),
+    ('en', 15, 'V for Vendetta', 'UK', 'Political', 'DC Comics', 'ISBN-DM-005', 'A masked revolutionary fights a dystopian government to inspire freedom and justice.'),
+    ('fr', 15, 'V pour Vendetta', 'Royaume-Uni', 'Politique', 'Urban Comics', 'ISBN-DM-005-FR', 'Un révolutionnaire masqué combat un gouvernement dystopique pour défendre la liberté et la justice.'),
+    ('en', 16, 'Gaston Lagaffe', 'Belgium', 'Humor', 'Cinebook', 'ISBN-L-001', 'Comical adventures of an accident-prone office worker and his hilarious inventions.'),
+    ('fr', 16, 'Gaston Lagaffe', 'Belgique', 'Humour', 'Dupuis', 'ISBN-L-001-FR', 'Les aventures comiques d’un employé de bureau maladroit et de ses inventions hilarantes.'),
+    ('en', 17, 'Asterix', 'France', 'Humor', 'Orion', 'ISBN-L-002', 'The adventures of a clever Gaul and his friends resisting Roman occupation with wit and humor.'),
+    ('fr', 17, 'Astérix', 'France', 'Humour', 'Hachette', 'ISBN-L-002-FR', 'Les aventures d’un Gaulois astucieux et de ses amis qui résistent à l’occupation romaine avec esprit et humour.'),
+    ('en', 18, 'Calvin and Hobbes', 'USA', 'Humor', 'Andrews McMeel Publishing', 'ISBN-L-003', 'A young boy and his tiger friend explore imagination, mischief, and life’s lessons.'),
+    ('fr', 18, 'Calvin et Hobbes', 'Etats-Unis', 'Humour', 'Hors Collection', 'ISBN-L-003-FR', 'Un jeune garçon et son ami tigre explorent l’imagination, les bêtises et les leçons de la vie.'),
+    ('en', 19, 'Kid Paddle', 'Belgium', 'Humor', 'Cinebook', 'ISBN-L-004', 'Funny stories of a boy passionate about video games and his comical adventures.'),
+    ('fr', 19, 'Kid Paddle', 'Belgique', 'Humour', 'Dupuis', 'ISBN-L-004-FR', 'Les histoires amusantes d’un garçon passionné de jeux vidéo et de ses aventures comiques.'),
+    ('en', 20, 'The Simpsons Comics', 'USA', 'Humor', 'Bongo Comics', 'ISBN-L-005', 'The Simpsons family gets into humorous situations reflecting modern life and society.'),
+    ('fr', 20, 'Les Simpson : les comics', 'Etats-Unis', 'Humour', 'Jungle', 'ISBN-L-005-FR', 'La famille Simpson se retrouve dans des situations comiques qui reflètent la vie moderne et la société.'),
+    ('en', 21, 'Persepolis', 'France', 'Biography', 'Pantheon Books', 'ISBN-AR-001', 'A young girl’s life during the Iranian revolution, exploring identity and resilience.'),
+    ('fr', 21, 'Persepolis', 'France', 'Biographie', 'L’Association', 'ISBN-AR-001-FR', 'Le parcours d’une jeune fille pendant la révolution iranienne, entre quête d’identité et résilience.'),
+    ('en', 22, 'Brazen: Rebel Ladies Who Rocked the World', 'France', 'Feminism', 'First Second', 'ISBN-AR-002', 'Stories of remarkable women who defied conventions and shaped history.'),
+    ('fr', 22, 'Culottées', 'France', 'Féminisme', 'Gallimard', 'ISBN-AR-002-FR', 'Les histoires de femmes remarquables qui ont défié les conventions et marqué l’histoire.'),
+    ('en', 23, 'Fun Home', 'USA', 'Biography / Identity', 'Houghton Mifflin', 'ISBN-AR-003', 'Memoir exploring family, sexuality, and self-discovery.'),
+    ('fr', 23, 'Fun Home', 'Etats-Unis', 'Biographie / Identité', 'Denoël Graphic', 'ISBN-AR-003-FR', 'Un récit autobiographique qui explore la famille, la sexualité et la découverte de soi.'),
+    ('en', 24, 'Aya of Yop City', 'Ivory Coast', 'Social', 'Drawn & Quarterly', 'ISBN-AR-004', 'A lively story of a young woman navigating life, love, and friendship in Ivory Coast.'),
+    ('fr', 24, 'Aya de Yopougon', 'Côte d’Ivoire', 'Social', 'Gallimard', 'ISBN-AR-004-FR', 'Une histoire vivante qui suit une jeune femme confrontée aux réalités de la vie, de l’amour et de l’amitié en Côte d’Ivoire.'),
+    ('en', 25, 'World Without End', 'France', 'Ecology', 'Other Press', 'ISBN-AR-005', 'A graphic novel exploring the relationship between humanity, energy, and the environment, and the consequences of dependence on fossil fuels.'),
+    ('fr', 25, 'Le Monde sans fin', 'France', 'Écologie', 'Dargaud', 'ISBN-AR-005-FR', 'Une bande dessinée qui explore les liens entre l’humanité, l’énergie et l’environnement, ainsi que les conséquences de la dépendance aux énergies fossiles.'),
+    ('en', 26, 'Green Algae', 'France', 'Ecology / Investigative', 'MIT Press', 'ISBN-AR-006', 'Investigative report on the environmental disaster of green algae pollution in Brittany.'),
+    ('fr', 26, 'Algues vertes', 'France', 'Écologie / Enquête', 'Les Arènes', 'ISBN-AR-006-FR', 'Une enquête sur la catastrophe environnementale provoquée par la prolifération des algues vertes en Bretagne.'),
+    ('en', 27, 'Pyongyang: A Journey in North Korea', 'Canada', 'Political Documentary', 'Drawn & Quarterly', 'ISBN-AR-007', 'A humorous and insightful account of life in North Korea through a cartoonist’s perspective.'),
+    ('fr', 27, 'Pyongyang', 'Canada', 'Documentaire politique', 'L’Association', 'ISBN-AR-007-FR', 'Un témoignage humoristique et éclairant sur la vie en Corée du Nord, raconté du point de vue d’un dessinateur.'),
+    ('en', 28, 'Tintin in Tibet', 'Belgium', 'Adventure', 'Egmont', 'ISBN-C-001', 'Tintin travels to Tibet to rescue his friend Chang in a thrilling adventure.'),
+    ('fr', 28, 'Tintin au Tibet', 'Belgique', 'Aventure', 'Casterman', 'ISBN-C-001-FR', 'Tintin se rend au Tibet pour sauver son ami Tchang au cours d’une aventure palpitante.'),
+    ('en', 29, 'Spirou and Fantasio', 'Belgium', 'Adventure', 'Cinebook', 'ISBN-C-002', 'Two friends embark on exciting adventures filled with humor and creativity.'),
+    ('fr', 29, 'Spirou et Fantasio', 'Belgique', 'Aventure', 'Dupuis', 'ISBN-C-002-FR', 'Deux amis vivent des aventures passionnantes pleines d’humour et de créativité.'),
+    ('en', 30, 'Lucky Luke', 'Belgium', 'Western', 'Cinebook', 'ISBN-C-003', 'A quick-drawing cowboy confronts outlaws in humorous and classic Western tales.'),
+    ('fr', 30, 'Lucky Luke', 'Belgique', 'Western', 'Dupuis', 'ISBN-C-003-FR', 'Un cow-boy qui tire plus vite que son ombre affronte des hors-la-loi dans des récits western classiques et humoristiques.'),
+    ('en', 31, 'Flash Gordon', 'USA', 'Sci-Fi', 'King Features Syndicate', 'ISBN-C-004', 'A hero battles evil in space, defending humanity from cosmic threats.'),
+    ('fr', 31, 'Flash Gordon', 'Etats-Unis', 'Science-fiction', 'Soleil', 'ISBN-C-004-FR', 'Un héros combat les forces du mal dans l’espace et protège l’humanité contre les menaces cosmiques.'),
+    ('en', 32, 'The Phantom', 'USA', 'Adventure', 'King Features Syndicate', 'ISBN-C-005', 'The masked crime-fighter protects his jungle homeland from criminals and injustice.'),
+    ('fr', 32, 'Le Fantôme', 'Etats-Unis', 'Aventure', ' éditions françaises diverses', 'ISBN-C-005-FR', 'Un justicier masqué protège son territoire dans la jungle contre les criminels et l’injustice.');

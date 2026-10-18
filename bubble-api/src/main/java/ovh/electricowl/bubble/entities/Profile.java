@@ -8,6 +8,8 @@ public class Profile {
 
 	private String description;
 
+	private String language;
+
 	public Long getId() {
 		return id;
 	}
@@ -32,8 +34,17 @@ public class Profile {
 		this.description = description;
 	}
 
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	@Override
 	public String toString() {
-		return "Profile [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return "Profile [id=" + id + ", name=" + name + ", description=" + description
+				+ ", language=" + language + "]";
 	}
 }

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,11 +30,19 @@ public class QuestionRepository {
 	@Qualifier("bubbleJdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
 
-	public Question findQuestionByOrder(int order) throws DAONotFoundException, DAOException {
+	public Question findQuestionByOrder(int order, Locale local)
+			throws DAONotFoundException, DAOException {
 		try {
 			LOG.info("START >>> findQuestionById");
-			String sql = "SELECT * FROM t_questions q JOIN t_answers a ON a.a_question_id=q.q_id WHERE q.q_order = ?";
-			return jdbcTemplate.query(sql, new QuestionWithAnswersExtractor(), order);
+			String sql = """
+					SELECT q_id, q_order, qt_language, qt_label, a_id, a_order, a_reading_profile_id, at_language, at_label FROM t_questions q
+					JOIN t_questions_translations qt ON  (qt.qt_question_id = q.q_id AND qt.qt_language = ?)
+					JOIN t_answers a ON a.a_question_id = q.q_id
+					JOIN t_answers_translations at ON (at.at_answer_id = a.a_id AND at.at_language = ?)
+					WHERE q.q_order = ?
+					""";
+			return jdbcTemplate.query(sql, new QuestionWithAnswersExtractor(), local.getLanguage(),
+					local.getLanguage(), order);
 		} catch (EmptyResultDataAccessException e) {
 			LOG.error("Error resources not found findAllComics: {}", e);
 			throw new DAONotFoundException(e);
@@ -80,7 +89,8 @@ public class QuestionRepository {
 				Answer answer = new Answer();
 				answer.setId(rs.getLong("a_id"));
 				answer.setOrder(rs.getInt("a_order"));
-				answer.setLabel(rs.getString("a_label"));
+				answer.setLabel(rs.getString("at_label"));
+				answer.setLanguage(rs.getString("at_language"));
 				answer.setReadingProfileId(rs.getLong("a_reading_profile_id"));
 				answers.add(answer);
 
@@ -89,7 +99,8 @@ public class QuestionRepository {
 					question = new Question();
 					question.setId(rs.getLong("q_id"));
 					question.setOrder(rs.getInt("q_order"));
-					question.setLabel(rs.getString("q_label"));
+					question.setLanguage(rs.getString("qt_language"));
+					question.setLabel(rs.getString("qt_label"));
 					question.setAnswers(answers);
 				}
 			}

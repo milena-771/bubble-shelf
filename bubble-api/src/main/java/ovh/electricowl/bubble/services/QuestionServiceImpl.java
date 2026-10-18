@@ -2,6 +2,7 @@ package ovh.electricowl.bubble.services;
 
 import java.time.Clock;
 import java.time.Duration;
+import java.util.Locale;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -48,14 +49,14 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public QuestionResponse getQuestion(int order, UUID sessionId)
+	public QuestionResponse getQuestion(int order, UUID sessionId, Locale locale)
 			throws ResourceNotFoundException, ServiceException {
 		try {
 			LOG.info("START >>> getQuestion");
 
 			Session session;
 
-			Question entity = questionRepository.findQuestionByOrder(order);
+			Question entity = questionRepository.findQuestionByOrder(order, locale);
 
 			if ((order == 1) && (sessionId == null)) {
 				session = new Session(entity.getOrder(), maxTimePerQuestion, clock);
@@ -113,7 +114,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public QuestionResponse reinitSessionAndGetFirstQuestion(UUID sessionId)
+	public QuestionResponse reinitSessionAndGetFirstQuestion(UUID sessionId, Locale locale)
 			throws ServiceException, SessionNotFoundException, ResourceNotFoundException {
 		try {
 			LOG.info("START >>> reinitAndGetQuestion");
@@ -124,7 +125,7 @@ public class QuestionServiceImpl implements QuestionService {
 			Session session = sessionRepository.findById(sessionId)
 					.orElseThrow(SessionNotFoundException::new);
 			sessionRepository.deleteById(session.getId());
-			return getQuestion(1, null);
+			return getQuestion(1, null, locale);
 		} finally {
 			LOG.info("END <<< reinitAndGetQuestion");
 		}

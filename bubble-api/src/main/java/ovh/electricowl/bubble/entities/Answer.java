@@ -8,6 +8,8 @@ public class Answer {
 
 	private String label;
 
+	private String language;
+
 	private Long readingProfileId;
 
 	public Long getId() {
@@ -34,6 +36,14 @@ public class Answer {
 		this.label = label;
 	}
 
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	public Long getReadingProfileId() {
 		return readingProfileId;
 	}
@@ -44,7 +54,7 @@ public class Answer {
 
 	@Override
 	public String toString() {
-		return "Answer [id=" + id + ", order=" + order + ", label=" + label + ", readingProfileId="
-				+ readingProfileId + "]";
+		return "Answer [id=" + id + ", order=" + order + ", label=" + label + ", language="
+				+ language + ", readingProfileId=" + readingProfileId + "]";
 	}
 }

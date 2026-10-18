@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.services;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import ovh.electricowl.bubble.services.exceptions.TestNotCompletedException;
 @Service
 public interface ResultService {
 
-	public ResultResponse retrieveResults(UUID sessionId)
+	public ResultResponse retrieveResults(UUID sessionId, Locale locale)
 			throws ServiceException, SessionNotFoundException, TestNotCompletedException,
 			InvalidAnswerException, ResourceNotFoundException;
 

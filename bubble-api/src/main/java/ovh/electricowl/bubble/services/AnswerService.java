@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.services;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import ovh.electricowl.bubble.dto.QuestionResponse;
@@ -14,7 +15,7 @@ import ovh.electricowl.bubble.services.exceptions.TestAlreadyCompletedException;
 
 public interface AnswerService {
 
-	public QuestionResponse submitAnswer(SubmitAnswerRequest request, UUID session)
+	public QuestionResponse submitAnswer(SubmitAnswerRequest request, UUID session, Locale locale)
 			throws SessionNotFoundException, SessionExpiredException, ResourceNotFoundException,
 			ServiceException, TestAlreadyCompletedException, InvalidQuestionException,
 			InvalidAnswerException;

@@ -1,5 +1,6 @@
 package ovh.electricowl.bubble.controllers;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ovh.electricowl.bubble.dto.ResultResponse;
+import ovh.electricowl.bubble.entities.AcceptLangEnum;
 import ovh.electricowl.bubble.services.ResultService;
 import ovh.electricowl.bubble.services.exceptions.InvalidAnswerException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
@@ -34,12 +36,18 @@ public class ResultController {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public ResultResponse getResults(
-			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId)
-			throws ServiceException, SessionNotFoundException, TestNotCompletedException,
-			InvalidAnswerException, ResourceNotFoundException {
+			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId,
+			Locale locale) throws ServiceException, SessionNotFoundException,
+			TestNotCompletedException, InvalidAnswerException, ResourceNotFoundException {
 		try {
 			LOG.info("START >>> getResults");
-			return resultService.retrieveResults(sessionId);
+			if ((locale == null)
+					|| ((locale.getLanguage() == null) || locale.getLanguage().isBlank())
+					|| (!AcceptLangEnum.isValidLanguage(locale.getLanguage().toString()))) {
+				LOG.warn("set default to english");
+				locale = Locale.ENGLISH;
+			}
+			return resultService.retrieveResults(sessionId, locale);
 		} finally {
 			LOG.info("END <<< getResults");
 		}

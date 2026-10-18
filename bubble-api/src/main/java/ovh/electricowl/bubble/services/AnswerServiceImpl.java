@@ -2,6 +2,7 @@ package ovh.electricowl.bubble.services;
 
 import java.time.Clock;
 import java.time.Duration;
+import java.util.Locale;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -48,7 +49,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public QuestionResponse submitAnswer(SubmitAnswerRequest request, UUID sessionId)
+	public QuestionResponse submitAnswer(SubmitAnswerRequest request, UUID sessionId, Locale locale)
 			throws SessionNotFoundException, SessionExpiredException, ResourceNotFoundException,
 			TestAlreadyCompletedException, InvalidQuestionException, InvalidAnswerException,
 			ServiceException {
@@ -80,6 +81,7 @@ public class AnswerServiceImpl implements AnswerService {
 				response = new QuestionResponse();
 				response.setSessionId(session.getId());
 				response.setQuestion(null);
+				response.setLanguage(locale.getLanguage().toString());
 				ProgressDTO progress = new ProgressDTO();
 				progress.setCurrentQuestionNumber(questionOrder);
 				progress.setTotalQuestionNumber(totalQuestions);
@@ -87,7 +89,7 @@ public class AnswerServiceImpl implements AnswerService {
 				response.setProgress(progress);
 			} else {
 				session.moveToNextQuestion(questionOrder);
-				response = questionService.getQuestion(questionOrder, sessionId);
+				response = questionService.getQuestion(questionOrder, sessionId, locale);
 			}
 			return response;
 		} finally {

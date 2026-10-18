@@ -2,6 +2,7 @@ package ovh.electricowl.bubble.services;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -58,7 +59,7 @@ public class ResultServiceImpl implements ResultService {
 	}
 
 	@Override
-	public ResultResponse retrieveResults(UUID sessionId)
+	public ResultResponse retrieveResults(UUID sessionId, Locale locale)
 			throws ServiceException, SessionNotFoundException, TestNotCompletedException,
 			InvalidAnswerException, ResourceNotFoundException {
 		if (sessionId == null) {
@@ -76,9 +77,9 @@ public class ResultServiceImpl implements ResultService {
 			throw new InvalidAnswerException("Number of answer is incorrect.");
 		}
 		Map<Long, Integer> statistics = calculateStatistics(idAnswers);
-		Set<ProfileDTO> profiles = generateProfileDescription(statistics);
+		Set<ProfileDTO> profiles = generateProfileDescription(statistics, locale);
 		Set<Long> idProfiles = profiles.stream().map(p -> p.getId()).collect(Collectors.toSet());
-		Set<ComicDTO> comics = getRecommendComics(idProfiles);
+		Set<ComicDTO> comics = getRecommendComics(idProfiles, locale);
 
 		session.startQuestionTimer();
 		sessionRepository.save(session);
@@ -88,6 +89,7 @@ public class ResultServiceImpl implements ResultService {
 		results.setProfileDescription(profiles);
 		results.setRecommendedComics(comics);
 		results.setSessionId(session.getId());
+		results.setLanguage(locale.getLanguage().toString());
 		return results;
 	}
 
@@ -114,7 +116,7 @@ public class ResultServiceImpl implements ResultService {
 		}
 	}
 
-	private Set<ProfileDTO> generateProfileDescription(Map<Long, Integer> results)
+	private Set<ProfileDTO> generateProfileDescription(Map<Long, Integer> results, Locale locale)
 			throws ServiceException {
 		try {
 			LOG.info("START >>> generateProfileDescription");
@@ -123,7 +125,8 @@ public class ResultServiceImpl implements ResultService {
 			Set<Long> idProfiles = results.entrySet().stream()
 					.filter(r -> (r != null) && (r.getValue() == maxValue)).map(r -> r.getKey())
 					.collect(Collectors.toSet());
-			List<Profile> profiles = profileRepository.findAlProfilesByIds(idProfiles);
+			List<Profile> profiles = profileRepository.findAlProfilesByIds(idProfiles, locale);
+			System.out.println("profiles: " + profiles.toString());
 			return profiles.stream().filter(p -> p != null)
 					.map(p -> ReadingProfileMapper.toProfileDTO(p)).collect(Collectors.toSet());
 		} catch (DAOException e) {
@@ -134,10 +137,12 @@ public class ResultServiceImpl implements ResultService {
 		}
 	}
 
-	private Set<ComicDTO> getRecommendComics(Set<Long> idProfiles) throws ServiceException {
+	private Set<ComicDTO> getRecommendComics(Set<Long> idProfiles, Locale locale)
+			throws ServiceException {
 		try {
 			LOG.info("START >>> getRecommendComics");
-			List<Comic> comics = comicRepository.findComicsByProfileIds(idProfiles);
+			List<Comic> comics = comicRepository.findComicsByProfileIds(idProfiles, locale);
+			System.out.println("comics: " + comics.toString());
 			return comics.stream().map(ComicMapper::toComicDTO).collect(Collectors.toSet());
 		} catch (DAOException e) {
 			LOG.error("Technical error to get recommended comics");

@@ -42,11 +42,26 @@
 
 .language-dropdown {
   border: none;
+  border: 1px solid white;
+  border-radius: 80px;
+}
+
+.language-dropdown:hover {
+  box-shadow: none;
+  border: 1px solid rgb(0, 227, 129);
 }
 
 .language-dropdown:active, .language-dropdown:focus {
   box-shadow: none;
   border: 1px solid rgb(0, 227, 129);
+}
+
+.language-dropdown .icon {
+    font-size: 1.5rem;
+}
+
+.dropdown-item {
+    font-size: 1.5rem;
 }
 
 .dropdown-item:hover {
@@ -62,8 +77,9 @@
   min-width: max-content;
 }
 
-.dropdown:focus{
+/*.dropdown:focus{
     border-color: rgb(0,227,129);
     box-shadow: none;
-}
+    transition: border-color 0ms;
+}*/
 
