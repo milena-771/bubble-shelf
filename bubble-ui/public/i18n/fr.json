@@ -1,4 +1,7 @@
 {
+  "app": {
+    "title": "Bubble Shelf"
+  },
   "home": {
     "title": "Quel type de lecteur de bandes dessinées êtes-vous ?",
     "subtitleOne": "Faites notre test rapide pour découvrir votre",
@@ -41,5 +44,13 @@
     "title": "Le temps est écoulé !",
     "subtitle": "Veuillez recommencer le quiz",
     "restartBtn": "Recommencer"
+  },
+   "profiles": {
+    "1": "Dans les nuages",
+    "2": "À l'aventure",
+    "3": "Zones d'ombre",
+    "4": "Ça part en bulles",
+    "5": "Esprit critique",
+    "6": "Âme classique"
   }
 }

@@ -18,6 +18,7 @@ import ovh.electricowl.bubble.entities.AcceptLangEnum;
 import ovh.electricowl.bubble.services.QuestionService;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.ServiceException;
+import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 
 @RestController
@@ -47,6 +48,27 @@ public class QuestionController {
 				locale = Locale.ENGLISH;
 			}
 			return questionService.getQuestion(order, sessionId, locale);
+		} finally {
+			LOG.info("END <<< getQuestionByNumber");
+		}
+	}
+
+	@GetMapping("/refresh/{num}")
+	@ResponseStatus(HttpStatus.OK)
+	public QuestionResponse getRefreshQuestionByLang(@PathVariable("num") int order,
+			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId,
+			Locale locale) throws ResourceNotFoundException, ServiceException,
+			SessionNotFoundException, SessionExpiredException {
+		try {
+			LOG.info("START >>> getQuestionByNumber");
+			if ((locale == null)
+					|| ((locale.getLanguage() == null) || locale.getLanguage().isBlank())
+					|| (!locale.getLanguage().toString().equals("en")
+							&& !locale.getLanguage().toString().equals("fr"))) {
+				LOG.warn("locale == null set default to english");
+				locale = Locale.ENGLISH;
+			}
+			return questionService.getQuestionByLang(order, sessionId, locale);
 		} finally {
 			LOG.info("END <<< getQuestionByNumber");
 		}

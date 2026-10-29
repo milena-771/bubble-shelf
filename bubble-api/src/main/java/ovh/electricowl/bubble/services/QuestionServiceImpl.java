@@ -20,6 +20,7 @@ import ovh.electricowl.bubble.repositories.exceptions.DAOException;
 import ovh.electricowl.bubble.repositories.exceptions.DAONotFoundException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.ServiceException;
+import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 
 @Service
@@ -73,7 +74,6 @@ public class QuestionServiceImpl implements QuestionService {
 			QuestionResponse response = QuestionMapper.toQuestionResponse(entity, totalQuestions);
 			Long idAnswer = session.getAnswers().getOrDefault(order, 0L);
 			response.setSelectedAnswer(idAnswer);
-			response.getSelectedAnswer();
 			session.startQuestionTimer();
 			sessionRepository.save(session);
 			response.setSessionId(session.getId());
@@ -89,6 +89,39 @@ public class QuestionServiceImpl implements QuestionService {
 			throw new ServiceException(e);
 		} finally {
 			LOG.info("END <<< getQuestion");
+		}
+	}
+
+	@Override
+	public QuestionResponse getQuestionByLang(int order, UUID sessionId, Locale locale)
+			throws ResourceNotFoundException, ServiceException, SessionNotFoundException,
+			SessionExpiredException {
+		try {
+			LOG.info("START >>> getQuestionByLang");
+			if (sessionId == null) {
+				LOG.warn("sessionId is required for next questions.");
+				throw new ServiceException("sessionId is required for next questions.");
+			}
+			Session session = sessionRepository.findById(sessionId)
+					.orElseThrow(SessionNotFoundException::new);
+			session.validateAnswerTime();
+
+			Question entity = questionRepository.findQuestionByOrder(order, locale);
+
+			QuestionResponse response = QuestionMapper.toQuestionResponse(entity, totalQuestions);
+			session.startQuestionTimer();
+			sessionRepository.save(session);
+			response.setSessionId(session.getId());
+			return response;
+
+		} catch (DAONotFoundException e) {
+			LOG.warn("No data found : {}", e.getMessage());
+			throw new ResourceNotFoundException(e);
+		} catch (DAOException e) {
+			LOG.warn("Err getQuestion() --> {}", e);
+			throw new ServiceException(e);
+		} finally {
+			LOG.info("END <<< getQuestionByLang");
 		}
 	}
 

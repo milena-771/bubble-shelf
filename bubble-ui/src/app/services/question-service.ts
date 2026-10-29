@@ -23,4 +23,8 @@ export class QuestionService {
   fetchPreviousQuestion(questionNum:number) {
     return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/${questionNum}`)); 
   }
+
+  fetchRefreshQuestion(questionNum:number) {
+    return this.http.get<QuestionResponse>(this.baseUrl.concat(`/questions/refresh/${questionNum}`)); 
+  }
 }

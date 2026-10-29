@@ -5,5 +5,6 @@ export interface QuestionResponse {
     progress: ProgressModel;
     question: QuestionModel;
     selectedAnswer: number;
+    language: string;
     sessionId: string;
 }

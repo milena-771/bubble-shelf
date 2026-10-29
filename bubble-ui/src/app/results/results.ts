@@ -6,12 +6,12 @@ import { ResultModel } from '../models/result-model';
 import { SessionService } from '../services/session-service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js/auto';
-import { READING_PROFILE_LABELS, READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
+import { READING_PROFILE_COLORS } from '../constants/reading-profiles.const';
 import { ComicModel } from '../models/comic-model';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
 import { Router } from '@angular/router';
-import {TranslatePipe } from "@ngx-translate/core";
+import { TranslateService, TranslatePipe } from "@ngx-translate/core";
 declare var bootstrap: any;
 
 @Component({
@@ -20,11 +20,10 @@ declare var bootstrap: any;
   templateUrl: './results.html',
   styleUrl: './results.css',
 })
-export class Results implements OnInit{
+export class Results implements OnInit {
 
   results: WritableSignal<ResultModel | null> = signal(null);
   loading: WritableSignal<boolean> = signal(false);
-  profileLabels = READING_PROFILE_LABELS;
   profileColors = READING_PROFILE_COLORS;
   comicsToShow: WritableSignal<ComicModel[]> = signal([]);
   
@@ -52,6 +51,7 @@ export class Results implements OnInit{
 
   footer = inject(FooterService);
   header = inject(HeaderService);
+  translate = inject(TranslateService);
 
   @ViewChild(ComicDetails)
   comicDetails!: ComicDetails;
@@ -71,7 +71,7 @@ export class Results implements OnInit{
     this.resultsService.fetchResults().subscribe({ 
       next: (response: ResultModel) => {
         this.results.set(response);
-
+        this.translate.use(response.language);
         if(response.recommendedComics.length >= 5) {
           this.comicsToShow.set(response.recommendedComics.slice(0, 5));
         } else {
@@ -79,7 +79,7 @@ export class Results implements OnInit{
         }
 
         this.pieChartData = {
-          labels: Object.keys(response.statistics).map(key => READING_PROFILE_LABELS[key] || key.toString()),
+          labels: this.updatePieChartLabels(response.statistics),
           datasets: [
             {
               data: Object.values(response.statistics),
@@ -98,6 +98,12 @@ export class Results implements OnInit{
         }
       }
     });
+  }
+
+  private  updatePieChartLabels(statistics: Map<number, number>): string[] {
+    return Object.keys(statistics).map(key =>
+      this.translate.instant('profiles.' + key)
+    );
   }
 
   openComicDetails(comic: ComicModel) {

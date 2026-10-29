@@ -1,4 +1,7 @@
 {
+  "app": {
+    "title": "Bubble Shelf"
+  },
   "home": {
     "title": "What kind of comic reader are you ?",
     "subtitleOne": "Take our quick test to discover your",
@@ -41,5 +44,13 @@
     "title": "Time's up!",
     "subtitle": "Please restart the quiz",
     "restartBtn": "Restart"
+  },
+   "profiles": {
+    "1": "Dreamer",
+    "2": "Adventurer",
+    "3": "Dark Mind",
+    "4": "Laugh Seeker",
+    "5": "Activist Reader",
+    "6": "Old Classic Reader"
   }
 }

@@ -20,7 +20,7 @@
         <div class="col-md-7">
             @if(results(); as result) {
                 @for (profile of result.profileDescription; track profile.name) {              
-                    <div  class="mt-2 profile-title" [style.color]="profileColors[profile.id]">{{ profileLabels[profile.id] || profile.name }}</div> 
+                    <div  class="mt-2 profile-title" [style.color]="profileColors[profile.id]">{{ ('profiles.' + profile.id) | translate  }}</div> 
                     <div class="mb-4 font-result">{{ profile.description }}</div>
                 }
             }

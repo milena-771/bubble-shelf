@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
 import { ProgressModel } from '../models/progress-model';
-import {TranslatePipe } from "@ngx-translate/core";
+import { TranslatePipe } from "@ngx-translate/core";
+import { LanguageService } from '../services/language-service';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class Question implements OnInit {
 
   footer = inject(FooterService);
   header = inject(HeaderService);
+  languageService = inject(LanguageService);
 
   constructor(private questionService: QuestionService, private sessionService: SessionService, private router: Router) {}
 
@@ -37,7 +39,7 @@ export class Question implements OnInit {
     this.header.setConfig({
       showBorderBottom: true,
       showRestartBtn: false,
-      showLanguageSelector: false
+      showLanguageSelector: true
     });
     this.footer.setConfig({
       isResultsPage: false
@@ -50,12 +52,27 @@ export class Question implements OnInit {
         this.dataQuiz.set(response);
         this.progressBar.set(response.progress);
         this.sessionService.setSessionId(response.sessionId);
+        if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
         this.loading.set(false);
       },
       error: (error) => {
         console.log("Error fetching first question: ", error);
         this.loading.set(false);
       }
+    });
+
+    // Écoute les changements de langue provenant du Header
+    this.languageService.languageChangedObservable.subscribe(lang => {
+
+      // Récupère la question actuellement affichée
+      const questionOrder = this.dataQuiz()?.question.order;
+      
+      if (!questionOrder) return;
+
+      this.loading.set(true);
+
+      // Demande au backend la même question dans la nouvelle langue
+      this.fetchQuestionByOrder(questionOrder);
     });
   }
 
@@ -78,10 +95,33 @@ export class Question implements OnInit {
       next: (response: QuestionResponse) => {
         this.sessionService.setQuizCompleted(response.progress.completed);
         this.progressBar.set(response.progress);
+         if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
         this.currentPercentage.set((response.progress.currentQuestionNumber / response.progress.totalQuestionNumber) * 100);
         if(!response.progress.completed) { 
           this.dataQuiz.set(response);
           this.selectedAnswerId.set(response.selectedAnswer);
+        } else {
+          this.router.navigate(['/results']);
+        }
+        this.loading.set(false);
+      },
+      error: (error) => {
+        console.error(error);
+        this.loading.set(false);
+      }
+    });
+  }
+
+  fetchQuestionByOrder(questionOrder: number) {
+      this.questionService.fetchRefreshQuestion(questionOrder).subscribe({
+      next: (response: QuestionResponse) => {
+        this.sessionService.setQuizCompleted(response.progress.completed);
+        this.progressBar.set(response.progress);
+        if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
+        this.currentPercentage.set((response.progress.currentQuestionNumber / response.progress.totalQuestionNumber) * 100);
+        if(!response.progress.completed) { 
+          this.dataQuiz.set(response);
+          //this.selectedAnswerId.set(response.selectedAnswer);
         } else {
           this.router.navigate(['/results']);
         }
@@ -101,6 +141,7 @@ export class Question implements OnInit {
       next: (response: QuestionResponse) => {
         this.dataQuiz.set(response);
         this.progressBar.set(response.progress);
+        if(response.language != this.languageService.currentLang())  this.languageService.changeLanguage(response.language);
         this.currentPercentage.set((response.progress.currentQuestionNumber / response.progress.totalQuestionNumber) * 100);
         this.selectedAnswerId.set(response.selectedAnswer);
         this.loading.set(false);
@@ -119,6 +160,7 @@ export class Question implements OnInit {
       next: (response: QuestionResponse) => {
         console.log("First question response: ", response);
         this.dataQuiz.set(response);
+        this.languageService.changeLanguage(response.language);
         this.progressBar.set(response.progress);
         this.sessionService.setSessionId(response.sessionId);
         this.loading.set(false);
