@@ -11,7 +11,8 @@ import { ComicModel } from '../models/comic-model';
 import { HeaderService } from '../services/header-service';
 import { FooterService } from '../services/footer-service';
 import { Router } from '@angular/router';
-import { TranslateService, TranslatePipe } from "@ngx-translate/core";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { LanguageService } from '../services/language-service';
 declare var bootstrap: any;
 
 @Component({
@@ -51,6 +52,7 @@ export class Results implements OnInit {
 
   footer = inject(FooterService);
   header = inject(HeaderService);
+  languageService = inject(LanguageService);
   translate = inject(TranslateService);
 
   @ViewChild(ComicDetails)
@@ -59,7 +61,7 @@ export class Results implements OnInit {
   constructor(private resultsService: ResultsService, private sessionService: SessionService, private router: Router) { }
 
   ngOnInit(): void {
-    this.header.setConfig({showBorderBottom: false, showRestartBtn: true, showLanguageSelector: false});
+    this.header.setConfig({showBorderBottom: false, showRestartBtn: true, showLanguageSelector: true});
     this.footer.setConfig({isResultsPage: true});
     const sessionId = this.sessionService.getSessionId() !== null ? this.sessionService.getSessionId() : null;
     if(!sessionId) {
@@ -68,16 +70,28 @@ export class Results implements OnInit {
     }
     this.loading.set(true);
 
+    this.fetchResults();
+    
+    // Écoute les changements de langue provenant du Header
+    this.languageService.languageChangedObservable.subscribe(lang => {
+      this.loading.set(true);
+      this.fetchResults();
+    });
+  }
+
+  fetchResults() {
     this.resultsService.fetchResults().subscribe({ 
       next: (response: ResultModel) => {
+        console.log("Results response: ", response);
         this.results.set(response);
-        this.translate.use(response.language);
+        if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
         if(response.recommendedComics.length >= 5) {
           this.comicsToShow.set(response.recommendedComics.slice(0, 5));
         } else {
           this.comicsToShow.set(response.recommendedComics);
         }
-
+        console.log("comicsToShow: ", this.comicsToShow());
+        console.log("comics: ", response.recommendedComics);
         this.pieChartData = {
           labels: this.updatePieChartLabels(response.statistics),
           datasets: [

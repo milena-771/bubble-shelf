@@ -65,14 +65,12 @@ export class Question implements OnInit {
     this.languageService.languageChangedObservable.subscribe(lang => {
 
       // Récupère la question actuellement affichée
-      const questionOrder = this.dataQuiz()?.question.order;
-      
+      const questionOrder = this.dataQuiz()?.question.order;     
       if (!questionOrder) return;
-
       this.loading.set(true);
 
       // Demande au backend la même question dans la nouvelle langue
-      this.fetchQuestionByOrder(questionOrder);
+      this.refreshQuestionByLang(questionOrder);
     });
   }
 
@@ -112,7 +110,7 @@ export class Question implements OnInit {
     });
   }
 
-  fetchQuestionByOrder(questionOrder: number) {
+  refreshQuestionByLang(questionOrder: number) {
       this.questionService.fetchRefreshQuestion(questionOrder).subscribe({
       next: (response: QuestionResponse) => {
         this.sessionService.setQuizCompleted(response.progress.completed);
@@ -121,7 +119,6 @@ export class Question implements OnInit {
         this.currentPercentage.set((response.progress.currentQuestionNumber / response.progress.totalQuestionNumber) * 100);
         if(!response.progress.completed) { 
           this.dataQuiz.set(response);
-          //this.selectedAnswerId.set(response.selectedAnswer);
         } else {
           this.router.navigate(['/results']);
         }

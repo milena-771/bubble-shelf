@@ -19,7 +19,7 @@ export class TermsOfUse {
     this.header.setConfig({
       showBorderBottom: true,
       showRestartBtn: false, 
-      showLanguageSelector: false
+      showLanguageSelector: true
     });
     this.footer.setConfig({
       isResultsPage: false
