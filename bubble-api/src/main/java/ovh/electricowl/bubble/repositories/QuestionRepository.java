@@ -44,7 +44,7 @@ public class QuestionRepository {
 			return jdbcTemplate.query(sql, new QuestionWithAnswersExtractor(), local.getLanguage(),
 					local.getLanguage(), order);
 		} catch (EmptyResultDataAccessException e) {
-			LOG.error("Error resources not found findAllComics: {}", e);
+			LOG.error("Error resources not found findQuestionByOrder: {}", e);
 			throw new DAONotFoundException(e);
 		} catch (DataAccessException e) {
 			LOG.error("Error data access findQuestionByOrder: {}", e);

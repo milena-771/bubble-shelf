@@ -157,7 +157,7 @@ export class Question implements OnInit {
       next: (response: QuestionResponse) => {
         console.log("First question response: ", response);
         this.dataQuiz.set(response);
-        this.languageService.changeLanguage(response.language);
+         if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
         this.progressBar.set(response.progress);
         this.sessionService.setSessionId(response.sessionId);
         this.loading.set(false);

@@ -12,7 +12,8 @@ import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 public interface QuestionService {
 
 	public QuestionResponse getQuestion(int order, UUID sessionId, Locale locale)
-			throws ResourceNotFoundException, ServiceException;
+			throws ResourceNotFoundException, ServiceException, SessionNotFoundException,
+			SessionExpiredException;
 
 	public QuestionResponse getQuestionByLang(int order, UUID sessionId, Locale locale)
 			throws ResourceNotFoundException, ServiceException, SessionNotFoundException,
@@ -22,6 +23,7 @@ public interface QuestionService {
 			throws ResourceNotFoundException, ServiceException;
 
 	public QuestionResponse reinitSessionAndGetFirstQuestion(UUID sessionId, Locale locale)
-			throws ServiceException, SessionNotFoundException, ResourceNotFoundException;
+			throws ServiceException, SessionNotFoundException, ResourceNotFoundException,
+			SessionExpiredException;
 
 }

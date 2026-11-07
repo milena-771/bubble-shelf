@@ -51,13 +51,19 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public QuestionResponse getQuestion(int order, UUID sessionId, Locale locale)
-			throws ResourceNotFoundException, ServiceException {
+			throws ResourceNotFoundException, ServiceException, SessionNotFoundException,
+			SessionExpiredException {
 		try {
 			LOG.info("START >>> getQuestion");
 
 			Session session;
 
 			Question entity = questionRepository.findQuestionByOrder(order, locale);
+
+			if (entity == null) {
+				LOG.warn("No question found : {} {}", order, locale.getLanguage());
+				throw new ResourceNotFoundException("No question found");
+			}
 
 			if ((order == 1) && (sessionId == null)) {
 				session = new Session(entity.getOrder(), maxTimePerQuestion, clock);
@@ -82,9 +88,6 @@ public class QuestionServiceImpl implements QuestionService {
 			LOG.warn("No data found : {}", e.getMessage());
 			throw new ResourceNotFoundException(e);
 		} catch (DAOException e) {
-			LOG.warn("Err getQuestion() --> {}", e);
-			throw new ServiceException(e);
-		} catch (Exception e) {
 			LOG.warn("Err getQuestion() --> {}", e);
 			throw new ServiceException(e);
 		} finally {
@@ -148,7 +151,8 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public QuestionResponse reinitSessionAndGetFirstQuestion(UUID sessionId, Locale locale)
-			throws ServiceException, SessionNotFoundException, ResourceNotFoundException {
+			throws ServiceException, SessionNotFoundException, ResourceNotFoundException,
+			SessionExpiredException {
 		try {
 			LOG.info("START >>> reinitAndGetQuestion");
 			if (sessionId == null) {

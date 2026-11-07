@@ -45,6 +45,16 @@
     "subtitle": "Veuillez recommencer le quiz",
     "restartBtn": "Recommencer"
   },
+  "internalError": {
+    "title": "Oups !",
+    "subtitle": "Une erreur inattendue s'est produite, veuillez réessayer plus tard.",
+    "homeBtn": "Accueil"
+  },
+  "notFoundError":{
+    "title": "Oups !",
+    "subtitle": "La ressource demandée est introuvable.",
+    "homeBtn": "Accueil"
+  },
    "profiles": {
     "1": "Dans les nuages",
     "2": "À l'aventure",

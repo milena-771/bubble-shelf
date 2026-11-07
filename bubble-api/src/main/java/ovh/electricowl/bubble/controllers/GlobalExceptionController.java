@@ -16,6 +16,7 @@ import ovh.electricowl.bubble.repositories.exceptions.DuplicateResourceException
 import ovh.electricowl.bubble.services.exceptions.InvalidAnswerException;
 import ovh.electricowl.bubble.services.exceptions.InvalidQuestionException;
 import ovh.electricowl.bubble.services.exceptions.ResourceNotFoundException;
+import ovh.electricowl.bubble.services.exceptions.ServiceException;
 import ovh.electricowl.bubble.services.exceptions.SessionExpiredException;
 import ovh.electricowl.bubble.services.exceptions.SessionNotFoundException;
 import ovh.electricowl.bubble.services.exceptions.TestAlreadyCompletedException;
@@ -96,7 +97,7 @@ public class GlobalExceptionController {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler({ ServiceException.class, Exception.class })
 	public ResponseEntity<String> handleGenericException(Exception e) {
 		LOG.error("ERR 500 Generic : {} --> ", e.getClass().getSimpleName(), e);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

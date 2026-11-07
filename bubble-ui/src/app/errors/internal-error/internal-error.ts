@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {TranslatePipe } from "@ngx-translate/core";
-import { HeaderService } from '../services/header-service';
-import { FooterService } from '../services/footer-service';
+import { HeaderService } from '../../services/header-service';
+import { FooterService } from '../../services/footer-service';
 
 @Component({
-  selector: 'app-times-up',
+  selector: 'app-internal-error',
   imports: [RouterLink, TranslatePipe],
-  templateUrl: './times-up.html',
-  styleUrl: './times-up.css',
+  templateUrl: './internal-error.html',
+  styleUrl: './internal-error.css',
 })
-export class TimesUp {
+export class InternalError {
 
   header = inject(HeaderService);
   footer = inject(FooterService);
@@ -25,4 +25,5 @@ export class TimesUp {
       isResultsPage: false
     });
   }
+
 }

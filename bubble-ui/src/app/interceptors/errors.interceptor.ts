@@ -16,6 +16,14 @@ export function errorsInterceptor(
                 sessionService.setSessionExpired(true);
                 router.navigate(['/times-up']);
             }
+            if(error.status === 500) {
+                sessionService.setSessionExpired(true);
+                router.navigate(['/internal-error']);
+            }
+            if(error.status === 404) {
+                sessionService.setSessionExpired(true);
+                router.navigate(['/not-found']);
+            }
             return throwError(() => error);
         })
     );

@@ -45,6 +45,16 @@
     "subtitle": "Please restart the quiz",
     "restartBtn": "Restart"
   },
+  "internalError": {
+    "title": "Oops!",
+    "subtitle": "An unexpected error occurred, please try again later.",
+    "homeBtn": "Home"
+  },
+  "notFoundError":{
+    "title": "Oops!",
+    "subtitle": "The resource you are looking for could not be found.",
+    "homeBtn": "Home"
+  },
    "profiles": {
     "1": "Dreamer",
     "2": "Adventurer",

@@ -37,7 +37,8 @@ public class QuestionController {
 	@ResponseStatus(HttpStatus.OK)
 	public QuestionResponse getQuestionByNumber(@PathVariable("num") int order,
 			@RequestHeader(value = "X-Test-Session-Id", required = false) UUID sessionId,
-			Locale locale) throws ResourceNotFoundException, ServiceException {
+			Locale locale) throws ResourceNotFoundException, ServiceException,
+			SessionNotFoundException, SessionExpiredException {
 		try {
 			LOG.info("START >>> getQuestionByNumber");
 			if ((locale == null)
@@ -78,8 +79,8 @@ public class QuestionController {
 	@ResponseStatus(HttpStatus.OK)
 	public QuestionResponse restart(
 			@RequestHeader(value = "X-Test-Session-Id", required = true) UUID sessionId,
-			Locale locale)
-			throws ServiceException, SessionNotFoundException, ResourceNotFoundException {
+			Locale locale) throws ServiceException, SessionNotFoundException,
+			ResourceNotFoundException, SessionExpiredException {
 		try {
 			LOG.info("START >>> restart");
 			if ((locale == null)
