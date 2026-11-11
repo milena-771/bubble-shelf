@@ -48,7 +48,6 @@ export class Question implements OnInit {
     this.sessionService.resetSession();
     this.questionService.fetchFirstQuestion(++this.questionNum).subscribe({
       next: (response: QuestionResponse) => {
-        console.log("First question response: ", response);
         this.dataQuiz.set(response);
         this.progressBar.set(response.progress);
         this.sessionService.setSessionId(response.sessionId);
@@ -56,7 +55,6 @@ export class Question implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.log("Error fetching first question: ", error);
         this.loading.set(false);
       }
     });
@@ -88,7 +86,6 @@ export class Question implements OnInit {
       questionOrder,
       answerId
     };
-    console.log("Submitting answer: ", payload);
     this.questionService.fetchNextQuestion(payload).subscribe({
       next: (response: QuestionResponse) => {
         this.sessionService.setQuizCompleted(response.progress.completed);
@@ -104,7 +101,6 @@ export class Question implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.error(error);
         this.loading.set(false);
       }
     });
@@ -125,7 +121,6 @@ export class Question implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.error(error);
         this.loading.set(false);
       }
     });
@@ -144,18 +139,15 @@ export class Question implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.log("Error fetching previous question: ", error);
         this.loading.set(false);
       }
     });
   }
 
   restart(){
-    //window.location.reload();
     this.sessionService.resetSession();
     this.questionService.fetchFirstQuestion(1).subscribe({
       next: (response: QuestionResponse) => {
-        console.log("First question response: ", response);
         this.dataQuiz.set(response);
          if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
         this.progressBar.set(response.progress);
@@ -163,7 +155,6 @@ export class Question implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.log("Error fetching first question: ", error);
         this.loading.set(false);
       }
     });

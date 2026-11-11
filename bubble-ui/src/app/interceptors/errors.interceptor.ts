@@ -12,6 +12,7 @@ export function errorsInterceptor(
     const sessionService = inject(SessionService);
     return next(req).pipe(
         catchError((error) => {
+            console.error("HTTP error intercepted: ", error);
             if(error.status === 410 && !sessionService.getSessionExpired()) {
                 sessionService.setSessionExpired(true);
                 router.navigate(['/times-up']);

@@ -82,7 +82,6 @@ export class Results implements OnInit {
   fetchResults() {
     this.resultsService.fetchResults().subscribe({ 
       next: (response: ResultModel) => {
-        console.log("Results response: ", response);
         this.results.set(response);
         if(response.language != this.languageService.currentLang()) this.languageService.changeLanguage(response.language);
         if(response.recommendedComics.length >= 5) {
@@ -90,8 +89,6 @@ export class Results implements OnInit {
         } else {
           this.comicsToShow.set(response.recommendedComics);
         }
-        console.log("comicsToShow: ", this.comicsToShow());
-        console.log("comics: ", response.recommendedComics);
         this.pieChartData = {
           labels: this.updatePieChartLabels(response.statistics),
           datasets: [
@@ -104,7 +101,6 @@ export class Results implements OnInit {
         this.loading.set(false);
       },
       error: (error) => {
-        console.log("Error fetching results: ", error);
         this.loading.set(false);
         if(error.statusText === "Unknown Error") {
           this.sessionService.setSessionExpired(true);

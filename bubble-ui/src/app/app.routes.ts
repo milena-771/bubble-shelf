@@ -35,5 +35,9 @@ export const routes: Routes = [
     {
         path:'not-found',
         component:NotFound
+    },
+    {
+        path: '**',
+        component: NotFound,
     }
 ];
